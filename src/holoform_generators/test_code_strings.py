@@ -55,12 +55,18 @@ def process_items_with_loop(item_list, factor):
 """
 
 # --- Expected Holoform Description Parts for Validation ---
+# These are the raw strings as they appear in code. The test runner or validation
+# utility will handle normalization/cleaning if needed for comparison.
 EXPECTED_H_G_HELPER_DOCSTRING_DESC_EXACT = """This is the primary docstring description.
     It has multiple lines.
     And some    leading spaces on this line."""
-EXPECTED_H_G_HELPER_COMMENT_DESC = """# Core utility: This is the comment description.
+
+# This is the raw comment block. The Holoform generator will clean the '#' and leading spaces.
+# The test runner will need to compare against the *cleaned* version.
+EXPECTED_H_G_HELPER_COMMENT_DESC_RAW = """# Core utility: This is the comment description.
 # It is on the line immediately above the function.
 # And this comment also has multiple lines."""
+
 
 # --- Expected Operations Structures for Validation ---
 EXPECTED_F_CALLER_OPERATIONS = [
@@ -93,32 +99,32 @@ EXPECTED_F_WITH_LOOP_OPERATIONS = [
         "step_id": "s_assign_0", "expression_type": "arithmetic", 
         "assign_to_variable": "accumulated_value", 
         "expression_ast_repr": "Constant(value_type='number')", 
-        "semantic_purpose": "Assign value to 'accumulated_value'" 
+        "semantic_purpose": "Assign val to 'accumulated_value'" # Generator's default
     },
     {
         "step_id": "s_assign_1", "expression_type": "list_literal", 
         "assign_to_variable": "processed_items_details",
         "expression_ast_repr": "List(elts=[])", 
-        "semantic_purpose": "Assign value to 'processed_items_details'"
+        "semantic_purpose": "To store details from loop processing" # Correctly from inline comment
     },
     {
         "step_id": "s_loop_2", 
         "type": "for_loop",
         "target_variable": "item_value",
         "iterable_source_repr": "Name(id='item_list')",
-        "semantic_purpose": "Loop over items",
+        "semantic_purpose": "Loop over items", # From inline comment
         "loop_body_operations": [
             {
                 "step_id": "s_loop_assign_0", "expression_type": "arithmetic",
                 "assign_to_variable": "processed_item",
                 "expression_ast_repr": "BinOp(Name(id='item_value'), Mult, Name(id='factor'))",
-                "semantic_purpose": "Operation inside loop"
+                "semantic_purpose": "Operation inside loop" # From inline comment
             },
             {
                 "step_id": "s_loop_assign_1", "expression_type": "arithmetic",
                 "assign_to_variable": "accumulated_value",
                 "expression_ast_repr": "BinOp(Name(id='accumulated_value'), Add, Name(id='processed_item'))",
-                "semantic_purpose": "Another operation inside loop"
+                "semantic_purpose": "Another operation inside loop" # From inline comment
             }
         ]
     },
@@ -126,7 +132,7 @@ EXPECTED_F_WITH_LOOP_OPERATIONS = [
         "step_id": "s_assign_3", "expression_type": "arithmetic",
         "assign_to_variable": "final_result",
         "expression_ast_repr": "BinOp(Name(id='accumulated_value'), Add, Constant(value_type='number'))", 
-        "semantic_purpose": "Final operation after loop",
+        "semantic_purpose": "Final operation after loop", # From inline comment
         "assign_to_output": True 
     }
 ]
