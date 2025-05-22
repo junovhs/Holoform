@@ -59,10 +59,11 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
         comment_block_lines = []
         current_line_idx = node_lineno - 2 
         while current_line_idx >= 0:
-            line_content = self.source_lines[current_line_idx].strip()
+            line_content = self.source_lines[current_line_idx].strip() # Strip individual lines here for checker
+            original_line_content = self.source_lines[current_line_idx] # Keep original for holoform
             if line_content.startswith("#"):
-                comment_block_lines.insert(0, self.source_lines[current_line_idx]) # Keep original indentation/spacing
-            elif not line_content: # Empty line
+                comment_block_lines.insert(0, original_line_content) 
+            elif not line_content: 
                 if comment_block_lines: break 
             else: break
             current_line_idx -= 1
@@ -70,7 +71,7 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
 
     def visit_FunctionDef(self, node):
         self.holoform_data["id"] = f"{node.name}_auto_v1"
-        docstring = ast.get_docstring(node, clean=False) # clean=False to preserve original formatting for multiline
+        docstring = ast.get_docstring(node, clean=False) 
         if docstring:
             self.holoform_data["description"] = docstring
         else:
@@ -82,7 +83,6 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
             self.holoform_data["input_parameters"].append(arg.arg)
         
         for body_item_idx, body_item in enumerate(node.body):
-            # Skip the docstring node if it's the first expression
             if body_item_idx == 0 and isinstance(body_item, ast.Expr) and \
                isinstance(body_item.value, ast.Constant) and \
                isinstance(body_item.value.value, str) and docstring:
@@ -91,17 +91,15 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
                 self.visit_Assign(body_item)
             elif isinstance(body_item, ast.Return):
                 self.visit_Return(body_item)
-            # else:
-                # print(f"  WARNING: AST Gen skipping unhandled body item in FunctionDef: {type(body_item)}")
 
     def _ast_node_to_repr_str(self, node):
-        # Redacting specific numbers from constants in AST repr for less brittle tests against expected structure.
-        # We care about the *type* of constant and structure, not specific literals in this representation for now.
         if isinstance(node, ast.Name): return f"Name(id='{node.id}')"
         elif isinstance(node, ast.Constant):
             val_type = type(node.value).__name__
+            # For testing consistency, we want to know if it's a number, but not the exact number
+            if isinstance(node.value, (int, float)): val_type = 'number' 
             return f"Constant(value_type='{val_type}')" 
-        elif isinstance(node, ast.Num): return f"Constant(value_type='int')" # ast.Num is deprecated, map to Constant
+        elif isinstance(node, ast.Num): return f"Constant(value_type='number')" 
         elif isinstance(node, ast.BinOp):
             op_map = { ast.Add: "Add", ast.Sub: "Sub", ast.Mult: "Mult", ast.Div: "Div", ast.FloorDiv: "FloorDiv", ast.Mod:"Mod", ast.Pow:"Pow"}
             op_str = op_map.get(type(node.op), type(node.op).__name__)
@@ -125,7 +123,6 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
         else: operation["assign_to_variable"] = "_complex_target_"
         operation["expression_ast_repr"] = self._ast_node_to_repr_str(node.value)
         
-        # Extract inline comment for semantic_purpose
         if node.lineno > 0 and (node.lineno -1) < len(self.source_lines):
             assign_line_content = self.source_lines[node.lineno-1]
             comment_idx = assign_line_content.find("#")
@@ -144,7 +141,6 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
                 if op.get("assign_to_variable") == node.value.id:
                     op["assign_to_output"] = True
                     current_purpose = op.get("semantic_purpose", "")
-                    # If current purpose isn't already specific like an inline comment, make it about output
                     if current_purpose.startswith("Assign value to"): 
                         op["semantic_purpose"] = f"Set final output '{node.value.id}' from prior assignment"
                     break 
@@ -159,31 +155,45 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
              self.current_op_idx += 1
     
     def get_holoform(self):
-        # Post-processing default description
         if self.holoform_data["description"] == "Auto-generated Holoform (default description).":
-            op_summary = ""
+            op_summary = "its defined interface (no operations parsed)"
             if self.holoform_data["operations"]:
                 op_summary = self.holoform_data['operations'][0].get('semantic_purpose', 'its defined operations')
-            else:
-                op_summary = "its defined interface (no operations parsed)"
             self.holoform_data["description"] = f"Function '{self.holoform_data.get('id','unknown_function')}' appears to be for '{op_summary}'."
 
-        # Normalize multiline descriptions for consistent comparison/storage
         if isinstance(self.holoform_data["description"], str):
-            # Split, strip each line, then rejoin. This handles varying leading/trailing whitespace on lines.
-            # Also, for comment blocks, strip the leading '#' and a space if present.
             cleaned_lines = []
+            # Process lines to handle comment markers and preserve intentional docstring indentation
+            is_comment_block = all(line.lstrip().startswith("#") for line in self.holoform_data["description"].strip().splitlines() if line.strip())
+
             for line in self.holoform_data["description"].splitlines():
-                stripped_line = line.strip()
-                if stripped_line.startswith("#"):
-                    cleaned_lines.append(stripped_line[1:].strip()) # Strip '#' and then leading/trailing ws
-                else:
-                    cleaned_lines.append(stripped_line) # Just strip whitespace for docstring lines
-            self.holoform_data["description"] = "\n".join(cleaned_lines).strip() # Final strip of whole block
+                if is_comment_block:
+                    cleaned_lines.append(line.lstrip()[1:].lstrip() if line.lstrip().startswith("#") else line.strip())
+                else: # Docstring, preserve relative indentation by only stripping fully blank lines at start/end
+                    cleaned_lines.append(line) 
+            
+            # Smartly join docstring lines (handle leading/trailing empty lines from split)
+            if not is_comment_block and cleaned_lines:
+                start_idx = 0
+                while start_idx < len(cleaned_lines) and not cleaned_lines[start_idx].strip():
+                    start_idx += 1
+                end_idx = len(cleaned_lines) -1
+                while end_idx >= 0 and not cleaned_lines[end_idx].strip():
+                    end_idx -=1
+                self.holoform_data["description"] = "\n".join(cleaned_lines[start_idx:end_idx+1])
+
+            else: # Comment block or single line
+                 self.holoform_data["description"] = "\n".join(cleaned_lines).strip()
+
+
         return self.holoform_data
 
 def generate_holoform_from_code_string(code_str, function_name_target=None):
-    parsed_ast = ast.parse(code_str)
+    try:
+        parsed_ast = ast.parse(code_str)
+    except SyntaxError as e:
+        print(f"ERROR parsing code string: {e}")
+        return None
     source_lines = code_str.splitlines()
     for node in parsed_ast.body:
         if isinstance(node, ast.FunctionDef):
@@ -193,29 +203,35 @@ def generate_holoform_from_code_string(code_str, function_name_target=None):
                 return visitor.get_holoform()
     return None
 
-# --- Main execution for testing (with different test cases) ---
+# --- Main execution for testing ---
 if __name__ == "__main__":
+    # Updated EXPECTED_H_G_HELPER_DOCSTRING_DESC to match exact multiline docstring format
+    EXPECTED_H_G_HELPER_DOCSTRING_DESC_EXACT = """This is the primary docstring description.
+    It has multiple lines.
+    And some    leading spaces on this line."""
+
+
     test_scenarios = {
         "with_docstring": {
             "code_str": G_HELPER_GT_CORRECT_CODE_STR_WITH_DOCSTRING,
             "func_name": "G_helper_gt_correct_docstring",
-            "expected_desc_norm": EXPECTED_H_G_HELPER_DOCSTRING_DESC.replace("    ","").replace("  ","").strip(), # Normalize expected like generated
+            "expected_desc": EXPECTED_H_G_HELPER_DOCSTRING_DESC_EXACT,
             "expected_op_sem_purp": "The core calculation for docstring test",
-            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='int')), Add, Name(id='val2'))" # Matches new _ast_node_to_repr_str
+            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='number')), Add, Name(id='val2'))"
         },
         "with_comment_only": {
             "code_str": G_HELPER_GT_CORRECT_CODE_STR_WITH_COMMENT_ONLY,
             "func_name": "G_helper_gt_correct_comment",
-            "expected_desc_norm": "\n".join(l[1:].strip() for l in EXPECTED_H_G_HELPER_COMMENT_DESC.splitlines()),
+            "expected_desc": "Core utility: This is the comment description.\nIt is on the line immediately above the function.\nAnd this comment also has multiple lines.",
             "expected_op_sem_purp": "The inline comment for operation (comment test)",
-            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='int')), Add, Name(id='val2'))"
+            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='number')), Add, Name(id='val2'))"
         },
-        "no_desc_defined": { # Changed name for clarity
+        "no_desc_defined": {
             "code_str": G_HELPER_GT_CORRECT_CODE_STR_NO_COMMENT_OR_DOCSTRING,
             "func_name": "G_helper_gt_correct_no_desc",
-            "expected_desc_norm": "Function 'G_helper_gt_correct_no_desc_auto_v1' appears to be for 'The core calculation for no_desc test'.", # Default generated
+            "expected_desc": "Function 'G_helper_gt_correct_no_desc_auto_v1' appears to be for 'The core calculation for no_desc test'.",
             "expected_op_sem_purp": "The core calculation for no_desc test",
-            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='int')), Add, Name(id='val2'))"
+            "expected_ast_repr": "BinOp(BinOp(Name(id='val1'), Mult, Constant(value_type='number')), Add, Name(id='val2'))"
         }
     }
 
@@ -227,27 +243,20 @@ if __name__ == "__main__":
         scenario_passed = True
         if generated_holoform:
             print(f"✔️ Generated Holoform ID: {generated_holoform.get('id')}")
-            # Uncomment to see full generated Holoform for a scenario:
-            # print(json.dumps(generated_holoform, indent=2)) 
+            # print(json.dumps(generated_holoform, indent=2)) # For debugging generated structure
             
             # Validate Description
-            normalized_gen_desc = generated_holoform["description"] # Already normalized by get_holoform
-            normalized_exp_desc = details["expected_desc_norm"] # Already normalized during definition
+            gen_desc = generated_holoform["description"]
+            exp_desc = details["expected_desc"]
+            desc_matches = gen_desc == exp_desc
             
-            # Specific fix for multiline comment expectation in "with_comment_only" after internal normalization
-            if scenario_name == "with_comment_only":
-                 normalized_exp_desc = "Core utility: This is the comment description.\nIt is on the line immediately above the function.\nAnd this comment also has multiple lines."
-
-
-            desc_matches = normalized_gen_desc == normalized_exp_desc
             print(f"  Description Matches Expected: {'✅ SUCCESS' if desc_matches else '❌ FAILED'}")
             if not desc_matches:
-                scenario_passed = False
-                all_tests_overall_passed = False
-                print(f"    Generated: '''{normalized_gen_desc}'''")
-                print(f"    Expected:  '''{normalized_exp_desc}'''")
+                scenario_passed = False; all_tests_overall_passed = False
+                print(f"    Generated: '''{gen_desc}'''")
+                print(f"    Expected:  '''{exp_desc}'''")
 
-            # Validate Operations (simplified check for core elements)
+            # Validate Operations 
             if len(generated_holoform.get("operations", [])) == 1:
                 gen_op = generated_holoform["operations"][0]
                 
@@ -259,17 +268,14 @@ if __name__ == "__main__":
                 print(f"  Operation 'semantic_purpose' Matches: {'✅ SUCCESS' if sem_purp_matches else '❌ FAILED'}")
                 if not sem_purp_matches: scenario_passed = False; all_tests_overall_passed = False; print(f"    Gen SemPurp: '{gen_op.get('semantic_purpose')}'\n    Exp SemPurp: '{details['expected_op_sem_purp']}'")
                 
-                # Check assign_to_output presence implicitly from the return visitor
-                if not gen_op.get("assign_to_output") and generated_holoform.get("output_variable_name") == gen_op.get("assign_to_variable"):
-                     print(f"  Operation 'assign_to_output' potentially missing: ❌ FAILED")
-                     scenario_passed = False; all_tests_overall_passed = False
-
+                output_assignment_ok = ("assign_to_output" in gen_op and gen_op.get("assign_to_output") == True)
+                if not output_assignment_ok :
+                    print(f"  Operation 'assign_to_output' Flag Check: {'✅ SUCCESS' if output_assignment_ok else '❌ FAILED (flag not set or false)'}")
+                    scenario_passed=False; all_tests_overall_passed=False
             else:
                 print(f"  Operations Count Mismatch (expected 1): {len(generated_holoform.get('operations', []))} ❌ FAILED")
-                scenario_passed = False
-                all_tests_overall_passed = False
+                scenario_passed = False; all_tests_overall_passed = False
             
-            # Basic params and output_var name check (less verbose)
             expected_params = ["val1", "val2"]
             expected_output_name = "result"
             params_match = generated_holoform.get("input_parameters") == expected_params
@@ -277,11 +283,9 @@ if __name__ == "__main__":
             if not params_match : print(f"  Input Params Mismatch ❌ FAILED"); scenario_passed=False; all_tests_overall_passed=False
             if not output_match : print(f"  Output Var Name Mismatch ❌ FAILED"); scenario_passed=False; all_tests_overall_passed=False
 
-
         else:
             print(f"❌ FAILED to generate Holoform for {details['func_name']}.")
-            scenario_passed = False
-            all_tests_overall_passed = False
+            scenario_passed = False; all_tests_overall_passed = False
         print(f"--- Scenario '{scenario_name}' Result: {'PASS' if scenario_passed else 'FAIL'} ---")
 
     if all_tests_overall_passed:
