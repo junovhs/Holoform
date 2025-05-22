@@ -1,0 +1,10 @@
+# Ignore large data and environment files
+__pycache__/
+*.pyc
+.env
+# Data
+data/
+# Model checkpoints
+models/
+# Results outputs
+results/*.tmp
