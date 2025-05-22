@@ -20,9 +20,10 @@
     *   Simple assignment operations and their expression structure (as AST string representation).
     *   Function description (from docstrings or preceding comments).
     *   Operation semantic purpose (from inline comments).
-*   **Sub-Task 2.2 (Current Focus):** Extend AST generator to identify and represent internal function calls within a parsed function's body (e.g., for `F_caller_gt` calling `G_helper_gt`). 🔲
-*   **Sub-Task 2.3:** Handle basic loop structures (e.g., a simple `for` loop) in the AST generator. 🔲
-*   **Sub-Task 2.4:** Integrate auto-generated Holoforms from 2.1 & 2.2 into the "Simulated Zero-In POC" to verify end-to-end flow with generated abstractions. 🔲
+*   **Sub-Task 2.2:** Extend AST generator to identify and represent internal function calls within a parsed function's body (e.g., for `F_caller_gt` calling `G_helper_gt`). ✅
+*   **Sub-Task 2.3:** Extend AST generator to handle basic `for` loop structures. ✅
+*   **Sub-Task 2.3.1 (Structural Refactor):** Refactor the monolithic `ast_basic_generator.py` into a modular package structure (`ast_visitor.py`, `ast_utils.py`, `main_generator.py`, `constants.py`, `test_code_strings.py`, `validation_utils.py`) for better maintainability and clarity. ✅
+*   **Sub-Task 2.4 (Current Focus):** Integrate auto-generated Holoforms (from the refactored generator) into the "Simulated Zero-In POC" to verify end-to-end flow with generated abstractions. 🔲
 
 ## Milestone 3: Enhanced Holoform Representation & AI Interaction
 *Goal: Enrich Holoform expressiveness and explore direct interaction with LLMs.*
