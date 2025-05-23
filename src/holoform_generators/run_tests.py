@@ -1,23 +1,19 @@
 # AIResearchProject/src/holoform_generators/run_tests.py
 import json
-import sys
+import sys # <--- ADDED IMPORT SYS
 import os
 
 # --- START Workaround for imports when run as a script ---
-# Add the project root directory (e.g., "Holoform/") to sys.path.
-# This allows absolute imports from the project's perspective, e.g., from src.holoform_generators...
-# This assumes run_tests.py is in Holoform/src/holoform_generators/
 _CURRENT_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-_SRC_DIR = os.path.dirname(_CURRENT_SCRIPT_DIR) # Should be Holoform/src/
-_PROJECT_ROOT_DIR = os.path.dirname(_SRC_DIR)    # Should be Holoform/
+_SRC_DIR = os.path.dirname(_CURRENT_SCRIPT_DIR) 
+_PROJECT_ROOT_DIR = os.path.dirname(_SRC_DIR)    
 
 if _PROJECT_ROOT_DIR not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT_DIR)
 
-# Now, import using the path from the project root
 from src.holoform_generators.main_generator import generate_holoform_from_code_string
 from src.holoform_generators.validation_utils import compare_holoforms
-from src.holoform_generators import test_code_strings as tcs # tcs will now refer to the updated file
+from src.holoform_generators import test_code_strings as tcs
 from src.holoform_generators import constants as C
 # --- END Workaround ---
 
@@ -37,11 +33,10 @@ def run_all_tests():
             "assign_to_output": True
         }
     ]
-    # Expected description after generator's cleaning (removes surrounding blank lines from multiline)
     expected_desc_1_cleaned = "This is the primary docstring description.\n    It has multiple lines.\n    And some    leading spaces on this line."
     expected_holoform_1 = {
         "id": "G_helper_gt_correct_docstring_auto_v1",
-        "description": expected_desc_1_cleaned, # Compare against cleaned
+        "description": expected_desc_1_cleaned, 
         "input_parameters": ["val1", "val2"],
         "output_variable_name": "result",
         "operations": expected_operations_g_helper_docstring,
@@ -53,7 +48,6 @@ def run_all_tests():
         tcs.G_HELPER_GT_CORRECT_CODE_STR_WITH_DOCSTRING,
         "G_helper_gt_correct_docstring"
     )
-    # compare_holoforms default checks: id, description, input_parameters, output_variable_name, operations_structure
     result_1 = compare_holoforms(generated_holoform_1, expected_holoform_1)
     test_suite_results.append({"name": test_name_1, "passed": result_1})
     if not result_1: passed_all = False
@@ -61,7 +55,6 @@ def run_all_tests():
 
     # --- Test Case 2: G_helper_gt_correct_comment ---
     test_name_2 = "G_helper_gt_correct_comment"
-    # Expected description after generator's cleaning (removes '# ' and surrounding blank lines)
     expected_desc_2_cleaned = """Core utility: This is the comment description.
 It is on the line immediately above the function.
 And this comment also has multiple lines."""
@@ -77,7 +70,7 @@ And this comment also has multiple lines."""
     ]
     expected_holoform_2 = {
         "id": "G_helper_gt_correct_comment_auto_v1",
-        "description": expected_desc_2_cleaned, # Compare against cleaned
+        "description": expected_desc_2_cleaned, 
         "input_parameters": ["val1", "val2"],
         "output_variable_name": "result",
         "operations": expected_operations_g_helper_comment
@@ -128,7 +121,7 @@ And this comment also has multiple lines."""
     It has pre-call and post-call logic."""
     expected_holoform_4 = {
         "id": "F_caller_gt_auto_v1",
-        "description": expected_f_caller_docstring_cleaned, # Compare against cleaned
+        "description": expected_f_caller_docstring_cleaned, 
         "input_parameters": ["f_input_x"],
         "output_variable_name": "final_output_f",
         "operations": tcs.EXPECTED_F_CALLER_OPERATIONS 
@@ -148,10 +141,10 @@ And this comment also has multiple lines."""
     expected_f_with_loop_docstring_cleaned = "Processes each item in a list using a factor, accumulating results."
     expected_holoform_5 = {
         "id": "process_items_with_loop_auto_v1",
-        "description": expected_f_with_loop_docstring_cleaned, # Compare against cleaned
+        "description": expected_f_with_loop_docstring_cleaned, 
         "input_parameters": ["item_list", "factor"],
         "output_variable_name": "final_result",
-        "operations": tcs.EXPECTED_F_WITH_LOOP_OPERATIONS # This now uses the corrected version from the updated tcs
+        "operations": tcs.EXPECTED_F_WITH_LOOP_OPERATIONS 
     }
     print(f"\n--- Running Test: {test_name_5} ---")
     generated_holoform_5 = generate_holoform_from_code_string(
@@ -175,15 +168,14 @@ And this comment also has multiple lines."""
             if not r_val["passed"]:
                 print(f"- Test {r_idx+1}: {r_val['name']} FAILED")
     else:
-        print("\nAll tests passed successfully!")
+        print("All tests passed successfully!")
     
     return passed_all
 
 if __name__ == "__main__":
-    all_passed = run_all_tests()
-    # You can add a sys.exit(1) if not all_passed for CI environments
-    if not all_passed:
+    all_tests_passed = run_all_tests()
+    if not all_tests_passed:
         print("\nSome tests FAILED. Please review the output above for details.")
-        # sys.exit(1) 
+        sys.exit(1) # <--- ADDED SYS.EXIT(1) FOR CI
     else:
         print("\nAll tests in run_tests.py PASSED.")

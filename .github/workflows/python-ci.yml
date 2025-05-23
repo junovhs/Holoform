@@ -1,0 +1,37 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # You can also use windows-latest or macos-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"] # Test on a few Python versions
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4 # Use the latest version of checkout action
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5 # Use the latest version of setup-python action
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+
+    # If you had dependencies in a requirements.txt, you would install them here:
+    # - name: Install dependencies
+    #   run: |
+    #     python -m pip install --upgrade pip
+    #     pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python src/holoform_generators/run_tests.py
