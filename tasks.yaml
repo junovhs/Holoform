@@ -217,30 +217,37 @@ milestone_3:
           description: "Define 3 simple code understanding tasks for LLM evaluation (e.g., 'Explain the purpose of this function', 'Identify data sources for a variable')."
           type: "design"
           deliverable: "A new `llm_experiments.md` file with task definitions."
+          status: "done"
         - id: M3.4.2.1
           description: "Develop a consistent, human-readable textual serialization format for individual Holoforms."
           type: "implementation"
           deliverable: "A new `serialization.py` file in `src/holoform_generators`."
+          status: "done"
         - id: M3.4.3.1
           description: "Design prompts for feeding the textual Holoform and the task query to an LLM."
           type: "design"
           deliverable: "Prompt templates in `llm_experiments.md`."
+          status: "done"
         - id: M3.4.4.1
           description: "Conduct an initial experiment by sending a prompt to a chosen LLM API."
           type: "experiment"
           deliverable: "A new experiment report in the `experiments` directory."
+          status: "done"
         - id: M3.4.4.2
           description: "Document the inputs, outputs, and LLM configurations for the experiment."
           type: "documentation"
           deliverable: "Content in the new experiment report."
+          status: "done"
         - id: M3.4.5.1
           description: "Qualitatively evaluate the LLM's response for accuracy, relevance, and clarity."
           type: "analysis"
           deliverable: "Analysis section in the experiment report."
+          status: "done"
         - id: M3.4.5.2
           description: "Define simple success criteria for the LLM tasks."
           type: "design"
           deliverable: "Success criteria in `llm_experiments.md`."
+          status: "done"
 
 milestone_4:
   name: "Advanced Holoform Features, Inter-Holoform Analysis & Scalability"
