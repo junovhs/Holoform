@@ -259,22 +259,27 @@ milestone_4:
           description: "Investigate and document strategies for representing or annotating dynamic method dispatch."
           type: "research"
           deliverable: "A new research note on dynamic semantics."
+          status: "done"
         - id: M4.0.1.2
           description: "Investigate and document strategies for representing or annotating reflection patterns."
           type: "research"
           deliverable: "Section in the research note."
+          status: "done"
         - id: M4.0.1.3
           description: "Investigate and document strategies for representing or annotating `async/await`."
           type: "research"
           deliverable: "Section in the research note."
+          status: "done"
         - id: M4.0.1.4
           description: "Investigate and document strategies for representing or annotating I/O operations."
           type: "research"
           deliverable: "Section in the research note."
+          status: "done"
         - id: M4.0.1.5
           description: "Update `SPECIFICATION.md` with findings and limitations regarding dynamic semantics."
           type: "documentation"
           deliverable: "Updated `SPECIFICATION.md`."
+          status: "done"
 
     M4_1_Control_Flow:
       name: "Comprehensive Control Flow Representation"
@@ -283,26 +288,32 @@ milestone_4:
           description: "Design and implement Holoform representation for `if/elif/else` structures."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py` and `SPECIFICATION.md`."
+          status: "done"
         - id: M4.1.2.1
           description: "Design and implement Holoform representation for `while` loops."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py` and `SPECIFICATION.md`."
+          status: "done"
         - id: M4.1.3.1
           description: "Design and implement Holoform representation for basic `try/except/finally` blocks."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py` and `SPECIFICATION.md`."
+          status: "done"
         - id: M4.1.4.1
           description: "Create a new test case for `if/elif/else` structures."
           type: "testing"
           deliverable: "Updated `test_code_strings.py` and `run_tests.py`."
+          status: "done"
         - id: M4.1.4.2
           description: "Create a new test case for `while` loops."
           type: "testing"
           deliverable: "Updated `test_code_strings.py` and `run_tests.py`."
+          status: "done"
         - id: M4.1.4.3
           description: "Create a new test case for `try/except/finally` blocks."
           type: "testing"
           deliverable: "Updated `test_code_strings.py` and `run_tests.py`."
+          status: "done"
 
     M4_2_Data_Flow:
       name: "Enhanced Data Flow Analysis (Intra-Holoform)"
@@ -311,14 +322,17 @@ milestone_4:
           description: "Design schema extensions to represent variable definition-use chains."
           type: "design"
           deliverable: "Updated `SPECIFICATION.md`."
+          status: "done"
         - id: M4.2.2.1
           description: "Extend the AST visitor to identify and store data dependencies."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M4.2.3.1
           description: "Create a new test case to test data flow extraction accuracy."
           type: "testing"
           deliverable: "Updated `test_code_strings.py` and `run_tests.py`."
+          status: "done"
 
     M4_3_Call_Graph:
       name: "Inter-Holoform Call Graph & Project-Level Parsing"
@@ -327,18 +341,22 @@ milestone_4:
           description: "Develop functionality to parse all Python files from a specified project directory."
           type: "implementation"
           deliverable: "A new `project_parser.py` in `src/holoform_generators`."
+          status: "done"
         - id: M4.3.2.1
           description: "Generate Holoforms for all supported functions and class methods found within a project."
           type: "implementation"
           deliverable: "Updated `project_parser.py`."
+          status: "done"
         - id: M4.3.3.1
           description: "Construct and store a project-level Call Graph (nodes are Holoform IDs, edges are calls)."
           type: "implementation"
           deliverable: "Updated `project_parser.py`."
+          status: "done"
         - id: M4.3.4.1
           description: "Enhance the 'Simulated Zero-In POC' to use the project-level call graph for multi-hop traversal."
           type: "implementation"
           deliverable: "Updated `src/poc_integrations/task_2_4_zero_in_integration.py`."
+          status: "done"
 
     M4_4_Scalability:
       name: "Scalability & Performance Profiling on Real Repositories"
@@ -347,18 +365,22 @@ milestone_4:
           description: "Select and prepare 2 open-source Python repositories (10k-50k LoC) as benchmarks."
           type: "research"
           deliverable: "A new `benchmarks.md` file with repository information."
+          status: "done"
         - id: M4.4.1.1
           description: "Run the Holoform generator on the benchmark repositories."
           type: "experiment"
           deliverable: "A new experiment report."
+          status: "done"
         - id: M4.4.2.1
           description: "Profile the generator's performance (time, RAM, storage)."
           type: "analysis"
           deliverable: "Performance data in the experiment report."
+          status: "done"
         - id: M4.4.3.1
           description: "Identify and address any significant performance bottlenecks."
           type: "implementation"
           deliverable: "Code changes to improve performance."
+          status: "done"
 
     M4_5_Incremental_Updates:
       name: "Advanced Generator Feature - Incremental Updates"
@@ -367,14 +389,17 @@ milestone_4:
           description: "Design a strategy for incremental Holoform regeneration."
           type: "design"
           deliverable: "A new design note on incremental updates."
+          status: "done"
         - id: M4.5.2.1
           description: "Implement a basic prototype of the incremental update mechanism."
           type: "implementation"
           deliverable: "Code changes to the generator."
+          status: "done"
         - id: M4.5.3.1
           description: "Evaluate the performance benefits of incremental updates."
           type: "analysis"
           deliverable: "Performance comparison in an experiment report."
+          status: "done"
 
 milestone_5:
   name: "Holoform-Native AI Reasoning & Advanced Applications"

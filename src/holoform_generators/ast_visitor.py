@@ -61,9 +61,21 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
             elif isinstance(target, ast.Subscript):
                 self._handle_subscript_assign(node)
 
+        for op in self.holoform_data[C.KEY_OPERATIONS]:
+            if op["step_id"] == self._get_step_id("assign") - 1:
+                op["def_use"] = self._get_def_use(node)
+
     def visit_Return(self, node):
         if node.value:
             self.holoform_data[C.KEY_OUTPUT_VARIABLE_NAME] = ast_node_to_repr_str(node.value)
+
+            operation = {
+                "step_id": self._get_step_id("return"),
+                "op_type": "return",
+                "value": ast_node_to_repr_str(node.value),
+                "def_use": self._get_def_use(node)
+            }
+            self.holoform_data[C.KEY_OPERATIONS].append(operation)
 
     def _handle_call(self, node, assign_to_variable):
         call_node = node.value
@@ -128,3 +140,80 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
         for kw in call_node.keywords:
             mapping[kw.arg] = ast_node_to_repr_str(kw.value)
         return mapping
+
+    def _get_def_use(self, node):
+        defs = []
+        uses = []
+
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name):
+                    defs.append(target.id)
+            for value_node in ast.walk(node.value):
+                if isinstance(value_node, ast.Name):
+                    uses.append(value_node.id)
+        elif isinstance(node, ast.Return):
+            for value_node in ast.walk(node.value):
+                if isinstance(value_node, ast.Name):
+                    uses.append(value_node.id)
+
+        return {"defs": defs, "uses": uses}
+
+    def visit_If(self, node):
+        test = ast_node_to_repr_str(node.test)
+        body_visitor = HoloformGeneratorVisitor(self.source_lines)
+        body = body_visitor.visit(node.body)
+
+        orelse_visitor = HoloformGeneratorVisitor(self.source_lines)
+        orelse = orelse_visitor.visit(node.orelse) if node.orelse else []
+
+        operation = {
+            "step_id": self._get_step_id("if"),
+            "op_type": "control_flow",
+            "subtype": "if",
+            "test": test,
+            "body": body["operations"],
+            "orelse": orelse["operations"] if orelse else []
+        }
+        self.holoform_data[C.KEY_OPERATIONS].append(operation)
+
+    def visit_While(self, node):
+        test = ast_node_to_repr_str(node.test)
+        body_visitor = HoloformGeneratorVisitor(self.source_lines)
+        body = body_visitor.visit(node.body)
+
+        operation = {
+            "step_id": self._get_step_id("while"),
+            "op_type": "control_flow",
+            "subtype": "while",
+            "test": test,
+            "body": body["operations"]
+        }
+        self.holoform_data[C.KEY_OPERATIONS].append(operation)
+
+    def visit_Try(self, node):
+        body_visitor = HoloformGeneratorVisitor(self.source_lines)
+        body = body_visitor.visit(node.body)
+
+        handlers = []
+        for handler in node.handlers:
+            handler_visitor = HoloformGeneratorVisitor(self.source_lines)
+            handler_body = handler_visitor.visit(handler.body)
+            handlers.append({
+                "type": ast_node_to_repr_str(handler.type) if handler.type else None,
+                "name": handler.name,
+                "body": handler_body["operations"]
+            })
+
+        finalbody_visitor = HoloformGeneratorVisitor(self.source_lines)
+        finalbody = finalbody_visitor.visit(node.finalbody) if node.finalbody else []
+
+        operation = {
+            "step_id": self._get_step_id("try"),
+            "op_type": "control_flow",
+            "subtype": "try",
+            "body": body["operations"],
+            "handlers": handlers,
+            "finalbody": finalbody["operations"] if finalbody else []
+        }
+        self.holoform_data[C.KEY_OPERATIONS].append(operation)

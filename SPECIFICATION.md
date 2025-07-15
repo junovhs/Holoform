@@ -78,6 +78,30 @@ A function Holoform represents a single function. It has the following schema:
 }
 ```
 
+#### `runtime_phenomena`
+
+The `runtime_phenomena` operation type represents advanced runtime phenomena that are difficult to represent with static analysis. It has the following subtypes:
+
+*   **`dynamic_dispatch`**: Represents a dynamic method call.
+*   **`reflection`**: Represents a reflection operation.
+*   **`async_call`**: Represents an `async` function call.
+*   **`io`**: Represents an I/O operation.
+
+#### `control_flow`
+
+The `control_flow` operation type represents control flow structures. It has the following subtypes:
+
+*   **`if`**: Represents an `if/elif/else` structure.
+*   **`while`**: Represents a `while` loop.
+*   **`try`**: Represents a `try/except/finally` structure.
+
+### Variable Definition-Use Chains
+
+To represent variable definition-use chains, we will add a `def_use` field to each operation in the `operations` array. This field will be an object with two properties:
+
+*   **`defs`**: A list of the variables that are defined in this operation.
+*   **`uses`**: A list of the variables that are used in this operation.
+
 #### Class Holoform
 
 A class Holoform represents a single class. It has the following schema:
