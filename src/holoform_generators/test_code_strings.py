@@ -11,6 +11,53 @@ def G_helper_gt_correct_docstring(val1, val2):
     return result
 """
 
+# --- State Modification Tests ---
+STATE_MODIFICATION_CODE_STR = """
+class MyObject:
+    def __init__(self):
+        self.my_attribute = "initial_value"
+
+def process_data(data_dict, items_list):
+    my_obj = MyObject()
+    my_obj.my_attribute = "new_value"
+    items_list.append("new_item")
+    data_dict["new_key"] = "new_value"
+"""
+
+EXPECTED_STATE_MODIFICATION_OPERATIONS = [
+    {
+        "step_id": "s_assign_0",
+        "assign_to_variable": "my_obj",
+        "op_type": "function_call",
+        "target_function_name": "MyObject",
+        "parameter_mapping": {},
+        "semantic_purpose": "Call & assign to 'my_obj'"
+    },
+    {
+        "step_id": "s_assign_1",
+        "op_type": "state_modification",
+        "subtype": "attribute_assignment",
+        "target_object": "Name(id='my_obj')",
+        "attribute": "my_attribute",
+        "value": "Constant(value_type='str')"
+    },
+    {
+        "step_id": "s_assign_2",
+        "op_type": "state_modification",
+        "subtype": "list_append",
+        "target_list": "Name(id='items_list')",
+        "value": "Constant(value_type='str')"
+    },
+    {
+        "step_id": "s_assign_3",
+        "op_type": "state_modification",
+        "subtype": "dict_key_assignment",
+        "target_dict": "Name(id='data_dict')",
+        "key": "Constant(value_type='str')",
+        "value": "Constant(value_type='str')"
+    }
+]
+
 G_HELPER_GT_CORRECT_CODE_STR_WITH_COMMENT_ONLY = """
 # Core utility: This is the comment description.
 # It is on the line immediately above the function.

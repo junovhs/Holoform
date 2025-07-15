@@ -124,7 +124,7 @@ And this comment also has multiple lines."""
         "description": expected_f_caller_docstring_cleaned, 
         "input_parameters": ["f_input_x"],
         "output_variable_name": "final_output_f",
-        "operations": tcs.EXPECTED_F_CALLER_OPERATIONS 
+        "operations": tcs.EXPECTED_F_CALLER_OPERATIONS
     }
     print(f"\n--- Running Test: {test_name_4} ---")
     generated_holoform_4 = generate_holoform_from_code_string(
@@ -155,6 +155,27 @@ And this comment also has multiple lines."""
     test_suite_results.append({"name": test_name_5, "passed": result_5})
     if not result_5: passed_all = False
     print(f"--- Test {test_name_5} {'PASSED' if result_5 else 'FAILED'} ---")
+
+    # --- Test Case 6: State Modification ---
+    test_name_6 = "State_Modification"
+    expected_holoform_6 = {
+        "id": "process_data_auto_v1",
+        "description": "Func 'process_data_auto_v1' for 'Call & assign to 'my_obj''.",
+        "input_parameters": ["data_dict", "items_list"],
+        "output_variable_name": None,
+        "operations": tcs.EXPECTED_STATE_MODIFICATION_OPERATIONS,
+        "parent_module_id": C.DEFAULT_PARENT_MODULE_ID,
+        "tags": list(C.DEFAULT_TAGS)
+    }
+    print(f"\n--- Running Test: {test_name_6} ---")
+    generated_holoform_6 = generate_holoform_from_code_string(
+        tcs.STATE_MODIFICATION_CODE_STR,
+        "process_data"
+    )
+    result_6 = compare_holoforms(generated_holoform_6, expected_holoform_6)
+    test_suite_results.append({"name": test_name_6, "passed": result_6})
+    if not result_6: passed_all = False
+    print(f"--- Test {test_name_6} {'PASSED' if result_6 else 'FAILED'} ---")
 
     # --- Summary ---
     print("\n\n--- Test Suite Summary ---")

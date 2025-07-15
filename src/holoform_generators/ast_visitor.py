@@ -97,72 +97,117 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
 
     def visit_Assign(self, node, target_operations_list):
         base_operation = { C.KEY_OP_STEP_ID: self._get_step_id("assign") }
-        if len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
-            base_operation[C.KEY_OP_ASSIGN_TO_VARIABLE] = node.targets[0].id
-        else: base_operation[C.KEY_OP_ASSIGN_TO_VARIABLE] = "_complex_target_"
+        if len(node.targets) == 1:
+            target = node.targets[0]
+            if isinstance(target, ast.Name):
+                base_operation[C.KEY_OP_ASSIGN_TO_VARIABLE] = target.id
+            elif isinstance(target, ast.Attribute):
+                operation = {
+                    **base_operation,
+                    C.KEY_OP_TYPE: "state_modification",
+                    "subtype": "attribute_assignment",
+                    "target_object": ast_node_to_repr_str(target.value),
+                    "attribute": target.attr,
+                    "value": ast_node_to_repr_str(node.value)
+                }
+                target_operations_list.append(operation)
+                return
+            elif isinstance(target, ast.Subscript):
+                operation = {
+                    **base_operation,
+                    C.KEY_OP_TYPE: "state_modification",
+                    "subtype": "dict_key_assignment",
+                    "target_dict": ast_node_to_repr_str(target.value),
+                    "key": ast_node_to_repr_str(target.slice),
+                    "value": ast_node_to_repr_str(node.value)
+                }
+                target_operations_list.append(operation)
+                return
+            else:
+                base_operation[C.KEY_OP_ASSIGN_TO_VARIABLE] = "_complex_target_"
+        else:
+            base_operation[C.KEY_OP_ASSIGN_TO_VARIABLE] = "_complex_target_"
 
-        operation = {**base_operation} 
+        operation = {**base_operation}
         if isinstance(node.value, ast.Call):
             call_node = node.value
             operation[C.KEY_OP_TYPE] = "function_call"
-            if isinstance(call_node.func, ast.Name): operation[C.KEY_OP_TARGET_FUNCTION_NAME] = call_node.func.id
-            else: operation[C.KEY_OP_TARGET_FUNCTION_NAME] = "_complex_callable_"
+            if isinstance(call_node.func, ast.Name):
+                operation[C.KEY_OP_TARGET_FUNCTION_NAME] = call_node.func.id
+            else:
+                operation[C.KEY_OP_TARGET_FUNCTION_NAME] = "_complex_callable_"
             param_mapping = {}
             for kw in call_node.keywords:
-                if isinstance(kw.value, ast.Name): param_mapping[kw.arg] = {"source_type": "variable", "name": kw.value.id}
-                elif isinstance(kw.value, ast.Constant): param_mapping[kw.arg] = {"source_type": "constant", "value": kw.value.value}
-                else: param_mapping[kw.arg] = {"source_type": "expression_ast", "repr": ast_node_to_repr_str(kw.value)}
+                if isinstance(kw.value, ast.Name):
+                    param_mapping[kw.arg] = {"source_type": "variable", "name": kw.value.id}
+                elif isinstance(kw.value, ast.Constant):
+                    param_mapping[kw.arg] = {"source_type": "constant", "value": kw.value.value}
+                else:
+                    param_mapping[kw.arg] = {"source_type": "expression_ast", "repr": ast_node_to_repr_str(kw.value)}
             operation[C.KEY_OP_PARAMETER_MAPPING] = param_mapping
-        elif isinstance(node.value, ast.List) and not node.value.elts: 
+        elif isinstance(node.value, ast.List) and not node.value.elts:
             operation[C.KEY_OP_EXPRESSION_TYPE] = "list_literal"
             operation[C.KEY_OP_EXPRESSION_AST_REPR] = ast_node_to_repr_str(node.value)
-        else: 
+        else:
             operation[C.KEY_OP_EXPRESSION_TYPE] = "arithmetic"
             operation[C.KEY_OP_EXPRESSION_AST_REPR] = ast_node_to_repr_str(node.value)
-        
+
         assign_line_content = self.source_lines[node.lineno-1] if node.lineno > 0 and (node.lineno -1) < len(self.source_lines) else ""
         if assign_line_content:
             comment_idx = assign_line_content.find("#")
-            if comment_idx != -1: operation[C.KEY_OP_SEMANTIC_PURPOSE] = assign_line_content[comment_idx+1:].strip()
+            if comment_idx != -1:
+                operation[C.KEY_OP_SEMANTIC_PURPOSE] = assign_line_content[comment_idx+1:].strip()
             else:
                 verb = "Call & assign" if operation.get(C.KEY_OP_TYPE) == "function_call" else "Init list" if operation.get(C.KEY_OP_EXPRESSION_TYPE) == "list_literal" else "Assign val"
                 operation[C.KEY_OP_SEMANTIC_PURPOSE] = f"{verb} to '{operation.get(C.KEY_OP_ASSIGN_TO_VARIABLE, '_')}'"
-        else: operation[C.KEY_OP_SEMANTIC_PURPOSE] = f"Assign to '{operation.get(C.KEY_OP_ASSIGN_TO_VARIABLE, '_')}' (no line info)"
+        else:
+            operation[C.KEY_OP_SEMANTIC_PURPOSE] = f"Assign to '{operation.get(C.KEY_OP_ASSIGN_TO_VARIABLE, '_')}' (no line info)"
         target_operations_list.append(operation)
-    
+
     def visit_Call_Standalone(self, call_node, target_operations_list):
-        operation = { 
-            C.KEY_OP_STEP_ID: self._get_step_id("call_expr"), 
-            C.KEY_OP_TYPE: "function_call_standalone", 
-            C.KEY_OP_ASSIGN_TO_VARIABLE: None 
+        if isinstance(call_node.func, ast.Attribute) and call_node.func.attr == 'append':
+            operation = {
+                C.KEY_OP_STEP_ID: self._get_step_id("assign"),
+                C.KEY_OP_TYPE: "state_modification",
+                "subtype": "list_append",
+                "target_list": ast_node_to_repr_str(call_node.func.value),
+                "value": ast_node_to_repr_str(call_node.args[0]) if call_node.args else "None"
+            }
+            target_operations_list.append(operation)
+            return
+
+        operation = {
+            C.KEY_OP_STEP_ID: self._get_step_id("call_expr"),
+            C.KEY_OP_TYPE: "function_call_standalone",
+            C.KEY_OP_ASSIGN_TO_VARIABLE: None
         }
-        if isinstance(call_node.func, ast.Name): 
+        if isinstance(call_node.func, ast.Name):
             operation[C.KEY_OP_TARGET_FUNCTION_NAME] = call_node.func.id
-        else: 
+        else:
             operation[C.KEY_OP_TARGET_FUNCTION_NAME] = "_complex_callable_"
-        
+
         param_mapping = {}
         # Positional arguments
         for i, arg_node in enumerate(call_node.args):
              param_mapping[f"arg{i}"] = {"source_type": "expression_ast", "repr": ast_node_to_repr_str(arg_node)} # Or more specific if Name/Constant
         # Keyword arguments
         for kw in call_node.keywords:
-             if isinstance(kw.value, ast.Name): 
+             if isinstance(kw.value, ast.Name):
                  param_mapping[kw.arg] = {"source_type": "variable", "name": kw.value.id}
-             elif isinstance(kw.value, ast.Constant): 
+             elif isinstance(kw.value, ast.Constant):
                  param_mapping[kw.arg] = {"source_type": "constant", "value": kw.value.value}
-             else: 
+             else:
                  param_mapping[kw.arg] = {"source_type": "expression_ast", "repr": ast_node_to_repr_str(kw.value)}
         operation[C.KEY_OP_PARAMETER_MAPPING] = param_mapping
 
         call_line_content = self.source_lines[call_node.lineno-1] if call_node.lineno > 0 and (call_node.lineno -1) < len(self.source_lines) else ""
         if call_line_content:
             comment_idx = call_line_content.find("#")
-            if comment_idx != -1: 
+            if comment_idx != -1:
                 operation[C.KEY_OP_SEMANTIC_PURPOSE] = call_line_content[comment_idx+1:].strip()
-            else: 
+            else:
                 operation[C.KEY_OP_SEMANTIC_PURPOSE] = f"Execute call to '{operation.get(C.KEY_OP_TARGET_FUNCTION_NAME, '_')}'"
-        else: 
+        else:
             operation[C.KEY_OP_SEMANTIC_PURPOSE] = f"Execute call (no line info)"
         target_operations_list.append(operation)
 
@@ -221,7 +266,10 @@ class HoloformGeneratorVisitor(ast.NodeVisitor):
             op_summary = "its defined interface (no ops parsed)"
             if self.holoform_data.get(C.KEY_OPERATIONS): # Check if operations list is not empty
                 op_summary = self.holoform_data[C.KEY_OPERATIONS][0].get(C.KEY_OP_SEMANTIC_PURPOSE, 'its defined ops')
-            self.holoform_data[C.KEY_DESCRIPTION] = f"Func '{self.holoform_data.get(C.KEY_ID,'_')}' for '{op_summary}'."
+            description = f"Func '{self.holoform_data.get(C.KEY_ID,'_')}' for '{op_summary}'"
+            if not description.endswith("."):
+                description += "."
+            self.holoform_data[C.KEY_DESCRIPTION] = description
         
         # Clean the final description (docstring or comment block)
         current_desc = self.holoform_data[C.KEY_DESCRIPTION]

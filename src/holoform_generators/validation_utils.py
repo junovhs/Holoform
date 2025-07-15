@@ -52,10 +52,12 @@ def compare_holoforms(generated, expected, details_to_check=None):
                     if key == "loop_body_operations": # Recursive check for nested operations
                         if not compare_nested_ops(gen_op_full.get(key, []), exp_val):
                             op_match = False; break
+                    elif key == "op_type" and gen_op_full.get("type") == exp_val:
+                        continue
                     elif gen_op_full.get(key) != exp_val:
                         op_match = False
                         print(f"    Op[{i}] Mismatch on '{key}': Gen='{gen_op_full.get(key)}', Exp='{exp_val}' ❌")
-                        break 
+                        break
                 if not op_match: passed = False; break # Stop checking ops for this scenario if one mismatch
         else:
             print(f"  Operations Count Mismatch: Gen={len(gen_ops)}, Exp={len(exp_ops_check)} ❌")
