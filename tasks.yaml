@@ -173,34 +173,42 @@ milestone_3:
           description: "Define the formula for 'Semantic Compression Ratio' as (Source Tokens - Textualized Holoform Tokens) / Source Tokens."
           type: "design"
           deliverable: "Formula documented in a new `METRICS.md` file."
+          status: "done"
         - id: M3.3.1.2
           description: "Implement a Python function to calculate the Semantic Compression Ratio."
           type: "implementation"
           deliverable: "A new `metrics.py` file in `src/holoform_generators`."
+          status: "done"
         - id: M3.3.2.1
           description: "Define the criteria for a 'Semantic Fidelity Score', evaluating the preservation of key operational elements (variables, operations, calls, control flow, data dependencies)."
           type: "design"
           deliverable: "Criteria documented in `METRICS.md`."
+          status: "done"
         - id: M3.3.2.2
           description: "Prototype a Python function to programmatically calculate the Semantic Fidelity Score."
           type: "implementation"
           deliverable: "Function in `metrics.py`."
+          status: "done"
         - id: M3.3.3.1
           description: "Develop a script to automate the calculation of all defined metrics on a given set of Holoforms."
           type: "implementation"
           deliverable: "A new `calculate_metrics.py` script."
+          status: "done"
         - id: M3.3.4.1
           description: "Establish a benchmark set of at least 10 diverse Python code snippets for consistent metric evaluation."
           type: "testing"
           deliverable: "A new `benchmark` directory with Python files."
+          status: "done"
         - id: M3.3.5.1
           description: "Propose initial target thresholds for the Semantic Compression Ratio and Semantic Fidelity Score, with justifications."
           type: "research"
           deliverable: "Section in `METRICS.md`."
+          status: "done"
         - id: M3.3.6.1
           description: "Define initial project falsification thresholds based on the metrics (e.g., 'If compression < X% or fidelity < Y% on benchmark Z, the current abstraction is insufficient')."
           type: "research"
           deliverable: "Section in `METRICS.md`."
+          status: "done"
 
     M3_4_LLM_Interaction:
       name: "Initial LLM Interaction with Textual Holoforms"
