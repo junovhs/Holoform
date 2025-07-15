@@ -40,54 +40,67 @@ milestone_3:
           description: "Analyze and document common patterns of state change in Python, including attribute assignment (`obj.attr = x`), list appends, and dictionary assignments."
           type: "research"
           deliverable: "A new research note in the `notes` directory."
+          status: "done"
         - id: M3.1.2.1
           description: "Design Holoform schema extensions for attribute assignments, including new operation types and fields for object ID, attribute name, and the assigned value."
           type: "design"
           deliverable: "Schema extension definition in `SPECIFICATION.md`."
+          status: "done"
         - id: M3.1.2.2
           description: "Design Holoform schema extensions for list `append` calls."
           type: "design"
           deliverable: "Schema extension definition in `SPECIFICATION.md`."
+          status: "done"
         - id: M3.1.2.3
           description: "Design Holoform schema extensions for dictionary key assignments."
           type: "design"
           deliverable: "Schema extension definition in `SPECIFICATION.md`."
+          status: "done"
         - id: M3.1.3.1
           description: "Extend the AST visitor to parse `obj.attr = value` assignments."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.1.3.2
           description: "Extend the AST visitor to parse `my_list.append()` calls."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.1.3.3
           description: "Extend the AST visitor to parse `my_dict['key'] = val` assignments."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.1.4.1
           description: "Create a new test case in `test_code_strings.py` for attribute assignment."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.1.4.2
           description: "Add a test to `run_tests.py` to validate the new attribute assignment test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
         - id: M3.1.4.3
           description: "Create a new test case in `test_code_strings.py` for list append calls."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.1.4.4
           description: "Add a test to `run_tests.py` to validate the new list append test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
         - id: M3.1.4.5
           description: "Create a new test case in `test_code_strings.py` for dictionary key assignments."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.1.4.6
           description: "Add a test to `run_tests.py` to validate the new dictionary key assignment test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
 
     M3_2_Classes_And_Methods:
       name: "Holoform Representation for Classes and Methods"
@@ -96,50 +109,62 @@ milestone_3:
           description: "Design the Holoform schema for classes, including fields for class name, parent classes, a list of method Holoform IDs, and class attributes."
           type: "design"
           deliverable: "Schema definition in `SPECIFICATION.md`."
+          status: "done"
         - id: M3.2.1.2
           description: "Design the Holoform schema for methods, capturing `self` and the linkage to the class Holoform."
           type: "design"
           deliverable: "Schema definition in `SPECIFICATION.md`."
+          status: "done"
         - id: M3.2.2.1
           description: "Extend the AST visitor to parse `ClassDef` nodes."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.2.2.2
           description: "Extend the AST visitor to parse `FunctionDef` nodes within classes as methods."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.2.2.3
           description: "Extend the AST visitor to identify `__init__` methods and parse `self.x = ...` assignments as instance attribute initializations."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.2.2.4
           description: "Extend the AST visitor to parse instance method calls (`my_object.do_something()`)."
           type: "implementation"
           deliverable: "Updated `ast_visitor.py`."
+          status: "done"
         - id: M3.2.3.1
           description: "Create a new test case in `test_code_strings.py` for a simple class definition."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.2.3.2
           description: "Add a test to `run_tests.py` to validate the new class definition test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
         - id: M3.2.3.3
           description: "Create a new test case in `test_code_strings.py` for class instantiation."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.2.3.4
           description: "Add a test to `run_tests.py` to validate the new class instantiation test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
         - id: M3.2.3.5
           description: "Create a new test case in `test_code_strings.py` for an instance method call."
           type: "testing"
           deliverable: "Updated `test_code_strings.py`."
+          status: "done"
         - id: M3.2.3.6
           description: "Add a test to `run_tests.py` to validate the new instance method call test case."
           type: "testing"
           deliverable: "Updated `run_tests.py`."
+          status: "done"
 
     M3_3_Metrics:
       name: "Develop Robust Metrics for Holoform Evaluation"

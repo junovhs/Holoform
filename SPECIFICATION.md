@@ -12,15 +12,24 @@ This specification follows a semantic versioning scheme (e.g., `v1.0`, `v1.1`, `
 
 A Holoform is a JSON object that represents a single unit of code, such as a function, method, or class. The following sections define the fields in the Holoform object.
 
-### Holoform Schema v1.0
+### Holoform Object Types
+
+A Holoform can represent either a function or a class. The `holoform_type` field specifies which type of object the Holoform represents.
+
+#### Function Holoform
+
+A function Holoform represents a single function. It has the following schema:
 
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Holoform v1.0",
+  "title": "Function Holoform v1.0",
   "description": "Schema for a single Holoform object, representing a function.",
   "type": "object",
   "properties": {
+    "holoform_type": {
+      "const": "function"
+    },
     "id": {
       "description": "A unique identifier for the Holoform, typically derived from the function name.",
       "type": "string"
@@ -60,10 +69,77 @@ A Holoform is a JSON object that represents a single unit of code, such as a fun
     }
   },
   "required": [
+    "holoform_type",
     "id",
     "description",
     "input_parameters",
     "operations"
+  ]
+}
+```
+
+#### Class Holoform
+
+A class Holoform represents a single class. It has the following schema:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Class Holoform v1.0",
+  "description": "Schema for a single Holoform object, representing a class.",
+  "type": "object",
+  "properties": {
+    "holoform_type": {
+      "const": "class"
+    },
+    "id": {
+      "description": "A unique identifier for the Holoform, typically derived from the class name.",
+      "type": "string"
+    },
+    "parent_module_id": {
+      "description": "The identifier of the module that contains this Holoform.",
+      "type": "string"
+    },
+    "description": {
+      "description": "A human-readable description of the Holoform's purpose, extracted from docstrings or comments.",
+      "type": "string"
+    },
+    "tags": {
+      "description": "A list of tags that categorize the Holoform.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parent_classes": {
+      "description": "A list of the IDs of the parent classes.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "methods": {
+      "description": "A list of the IDs of the method Holoforms.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "class_attributes": {
+      "description": "A list of the class attributes.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "holoform_type",
+    "id",
+    "description",
+    "parent_classes",
+    "methods",
+    "class_attributes"
   ]
 }
 ```

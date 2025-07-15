@@ -11,53 +11,6 @@ def G_helper_gt_correct_docstring(val1, val2):
     return result
 """
 
-# --- State Modification Tests ---
-STATE_MODIFICATION_CODE_STR = """
-class MyObject:
-    def __init__(self):
-        self.my_attribute = "initial_value"
-
-def process_data(data_dict, items_list):
-    my_obj = MyObject()
-    my_obj.my_attribute = "new_value"
-    items_list.append("new_item")
-    data_dict["new_key"] = "new_value"
-"""
-
-EXPECTED_STATE_MODIFICATION_OPERATIONS = [
-    {
-        "step_id": "s_assign_0",
-        "assign_to_variable": "my_obj",
-        "op_type": "function_call",
-        "target_function_name": "MyObject",
-        "parameter_mapping": {},
-        "semantic_purpose": "Call & assign to 'my_obj'"
-    },
-    {
-        "step_id": "s_assign_1",
-        "op_type": "state_modification",
-        "subtype": "attribute_assignment",
-        "target_object": "Name(id='my_obj')",
-        "attribute": "my_attribute",
-        "value": "Constant(value_type='str')"
-    },
-    {
-        "step_id": "s_assign_2",
-        "op_type": "state_modification",
-        "subtype": "list_append",
-        "target_list": "Name(id='items_list')",
-        "value": "Constant(value_type='str')"
-    },
-    {
-        "step_id": "s_assign_3",
-        "op_type": "state_modification",
-        "subtype": "dict_key_assignment",
-        "target_dict": "Name(id='data_dict')",
-        "key": "Constant(value_type='str')",
-        "value": "Constant(value_type='str')"
-    }
-]
-
 G_HELPER_GT_CORRECT_CODE_STR_WITH_COMMENT_ONLY = """
 # Core utility: This is the comment description.
 # It is on the line immediately above the function.
@@ -108,11 +61,104 @@ EXPECTED_H_G_HELPER_DOCSTRING_DESC_EXACT = """This is the primary docstring desc
     It has multiple lines.
     And some    leading spaces on this line."""
 
+STATE_MODIFICATION_CODE_STR = """
+class MyObject:
+    def __init__(self):
+        self.my_attribute = "initial_value"
+
+def process_data(data_dict, items_list):
+    my_obj = MyObject()
+    my_obj.my_attribute = "new_value"
+    items_list.append("new_item")
+    data_dict["new_key"] = "new_value"
+"""
+
+EXPECTED_STATE_MODIFICATION_OPERATIONS = [
+    {
+        "step_id": "s_assign_0",
+        "assign_to_variable": "my_obj",
+        "op_type": "constructor_call",
+        "target_function_name": "MyObject",
+        "parameter_mapping": {}
+    },
+    {
+        "step_id": "s_assign_1",
+        "op_type": "state_modification",
+        "subtype": "attribute_assignment",
+        "target_object": "Name(id='my_obj')",
+        "attribute": "my_attribute",
+        "value": "Constant(value_type='str')"
+    },
+    {
+        "step_id": "s_assign_2",
+        "op_type": "state_modification",
+        "subtype": "list_append",
+        "target_list": "Name(id='items_list')",
+        "value": "Constant(value_type='str')"
+    },
+    {
+        "step_id": "s_assign_3",
+        "op_type": "state_modification",
+        "subtype": "dict_key_assignment",
+        "target_dict": "Name(id='data_dict')",
+        "key": "Constant(value_type='str')",
+        "value": "Constant(value_type='str')"
+    }
+]
+
 # This is the raw comment block. The Holoform generator will clean the '#' and leading spaces.
 # The test runner will need to compare against the *cleaned* version.
 EXPECTED_H_G_HELPER_COMMENT_DESC_RAW = """# Core utility: This is the comment description.
 # It is on the line immediately above the function.
 # And this comment also has multiple lines."""
+
+CLASS_METHOD_CODE_STR = """
+class MyTestClass:
+    "A test class for Holoform generation."
+    class_attribute = "some_value"
+
+    def __init__(self, name):
+        self.name = name
+
+    def my_method(self, value):
+        "A test method."
+        self.name = value
+        return self.name
+
+def use_class():
+    my_instance = MyTestClass("initial_name")
+    my_instance.my_method("new_name")
+"""
+
+EXPECTED_CLASS_HOLOFORM = {
+    "holoform_type": "class",
+    "id": "MyTestClass_auto_v1",
+    "description": "A test class for Holoform generation.",
+    "parent_classes": [],
+    "methods": ["__init___auto_v1", "my_method_auto_v1"],
+    "class_attributes": ["class_attribute"]
+}
+
+EXPECTED_USE_CLASS_OPERATIONS = [
+    {
+        "step_id": "s_assign_0",
+        "assign_to_variable": "my_instance",
+        "op_type": "constructor_call",
+        "target_function_name": "MyTestClass",
+        "parameter_mapping": {
+            "name": "Constant(value_type='str')"
+        }
+    },
+    {
+        "step_id": "s_call_expr_1",
+        "op_type": "function_call_standalone",
+        "target_function_name": "my_method",
+        "target_object": "Name(id='my_instance')",
+        "parameter_mapping": {
+            "value": "Constant(value_type='str')"
+        }
+    }
+]
 
 
 # --- Expected Operations Structures for Validation ---
@@ -124,7 +170,7 @@ EXPECTED_F_CALLER_OPERATIONS = [
         "semantic_purpose": "Pre-call logic"
     },
     {
-        "step_id": "s_assign_1", "type": "function_call",
+        "step_id": "s_assign_1", "op_type": "function_call",
         "assign_to_variable": "helper_result_f",
         "target_function_name": "G_helper_gt_correct_docstring",
         "parameter_mapping": {

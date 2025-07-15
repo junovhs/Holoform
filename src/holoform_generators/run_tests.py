@@ -177,6 +177,37 @@ And this comment also has multiple lines."""
     if not result_6: passed_all = False
     print(f"--- Test {test_name_6} {'PASSED' if result_6 else 'FAILED'} ---")
 
+    # --- Test Case 7: Class Definition ---
+    test_name_7 = "Class_Definition"
+    print(f"\n--- Running Test: {test_name_7} ---")
+    generated_holoform_7 = generate_holoform_from_code_string(
+        tcs.CLASS_METHOD_CODE_STR,
+        "MyTestClass"
+    )
+    result_7 = compare_holoforms(generated_holoform_7, tcs.EXPECTED_CLASS_HOLOFORM)
+    test_suite_results.append({"name": test_name_7, "passed": result_7})
+    if not result_7: passed_all = False
+    print(f"--- Test {test_name_7} {'PASSED' if result_7 else 'FAILED'} ---")
+
+    # --- Test Case 8: Use Class ---
+    test_name_8 = "Use_Class"
+    expected_holoform_8 = {
+        "id": "use_class_auto_v1",
+        "description": "Func 'use_class_auto_v1' for 'Call & assign to 'my_instance''.",
+        "input_parameters": [],
+        "output_variable_name": None,
+        "operations": tcs.EXPECTED_USE_CLASS_OPERATIONS
+    }
+    print(f"\n--- Running Test: {test_name_8} ---")
+    generated_holoform_8 = generate_holoform_from_code_string(
+        tcs.CLASS_METHOD_CODE_STR,
+        "use_class"
+    )
+    result_8 = compare_holoforms(generated_holoform_8, expected_holoform_8)
+    test_suite_results.append({"name": test_name_8, "passed": result_8})
+    if not result_8: passed_all = False
+    print(f"--- Test {test_name_8} {'PASSED' if result_8 else 'FAILED'} ---")
+
     # --- Summary ---
     print("\n\n--- Test Suite Summary ---")
     num_passed = sum(1 for r in test_suite_results if r["passed"])
