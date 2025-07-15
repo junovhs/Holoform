@@ -54,6 +54,14 @@ Can the Holoform generator successfully parse the benchmark repositories and gen
 | `requests` | [Simulated] 10 | [Simulated] 1 |
 | `flask` | [Simulated] 15 | [Simulated] 2 |
 
+**Debugger Agent Performance:**
+
+| Bug | Correctly Localized |
+| :--- | :--- |
+| [Simulated] Bug 1 | Yes |
+| [Simulated] Bug 2 | No |
+| [Simulated] Bug 3 | Yes |
+
 **Qualitative Results:**
 
 *   The Holoform generator was able to successfully parse both benchmark repositories.

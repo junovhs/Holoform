@@ -411,10 +411,12 @@ milestone_5:
           description: "Design experiments to correlate Holoform fidelity levels with LLM performance on downstream tasks."
           type: "design"
           deliverable: "A new experiment design document."
+          status: "done"
         - id: M5.0.1.2
           description: "Conduct the experiments to establish a 'loss budget'."
           type: "experiment"
           deliverable: "A new experiment report."
+          status: "done"
 
     M5_1_Query_Language:
       name: "Holoform Query Language/API"
@@ -423,10 +425,12 @@ milestone_5:
           description: "Research existing graph query languages and design a conceptual query language for the Holoform graph."
           type: "research"
           deliverable: "A new design document for the query language."
+          status: "done"
         - id: M5.1.2.1
           description: "Implement a prototype of the query API."
           type: "implementation"
           deliverable: "A new `query_api.py` in `src/holoform_generators`."
+          status: "done"
 
     M5_2_AI_Debugging:
       name: "AI-Assisted Debugging with Holoform Graph"
@@ -435,14 +439,17 @@ milestone_5:
           description: "Develop AI agent logic for complex bug localization tasks using the project-level Holoform graph."
           type: "implementation"
           deliverable: "A new `debugger_agent.py`."
+          status: "done"
         - id: M5.2.2.1
           description: "Evaluate the agent's performance against a benchmark of publicly documented bugs."
           type: "analysis"
           deliverable: "An experiment report with performance metrics."
+          status: "done"
         - id: M5.2.3.1
           description: "Investigate how to integrate dynamic analysis information to weight paths in the Holoform graph."
           type: "research"
           deliverable: "A research note on integrating dynamic analysis."
+          status: "done"
 
     M5_3_Summarization:
       name: "Advanced Code Understanding & Summarization"
@@ -451,10 +458,12 @@ milestone_5:
           description: "Experiment with AI agents using the Query API to generate multi-Holoform summaries."
           type: "experiment"
           deliverable: "An experiment report."
+          status: "done"
         - id: M5.3.2.1
           description: "Compare the quality of the generated summaries against baselines."
           type: "analysis"
           deliverable: "Analysis section in the experiment report."
+          status: "done"
 
     M5_4_Code_Modification:
       name: "(Exploratory) Holoforms for AI-Assisted Code Modification & Security"
@@ -463,7 +472,9 @@ milestone_5:
           description: "Conceptualize how the Holoform graph and Query API could be used by an LLM to identify locations for code modifications and predict ripple effects."
           type: "research"
           deliverable: "A research note on AI-assisted code modification."
+          status: "done"
         - id: M5.4.2.1
           description: "Define a preliminary threat model for Holoform-guided AI code modification."
           type: "research"
           deliverable: "A research note on the threat model."
+          status: "done"
