@@ -45,6 +45,16 @@ The primary goal is to enable an Artificial Intelligence (AI) to efficiently nav
 
 We track progress through meaningful commits, dedicated branches for major lines of work (e.g., `task/auto-gen-v1`), and Git tags for significant milestone completions.
 
-## Current Focus
+## Current Status
 
-Currently, the research is focused on **Milestone 2: Basic Automated Holoform Generation (AST-Based)**, specifically extending the Python AST parser to handle more complex code structures like loops and inter-function calls, and then integrating these auto-generated Holoforms into our "Simulated Zero-In POC".
+The project has successfully completed **Milestones 1-5**, establishing a solid foundation for AI-centric code abstraction. Recent breakthrough experiments have demonstrated concrete evidence that Holoforms provide unique value for AI code understanding, particularly for:
+
+- **Hidden State Modifications**: Making side effects explicit across function boundaries
+- **Complex Control Flow**: Structuring nested conditions for clearer reasoning
+- **Cross-Function Data Flow**: Showing explicit parameter mappings and data relationships
+
+These "magic moments" validate the core research hypothesis that Holoforms enable superior AI code comprehension compared to raw source code or AST representations.
+
+## Next Phase
+
+The research is now positioned to scale to larger codebases and explore advanced applications including GNN integration, multi-language support, and comprehensive user studies (Milestone 6).
