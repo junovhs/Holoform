@@ -1,0 +1,146 @@
+{
+  "test_suite": "HoloChain Validation",
+  "timestamp": "2024-01-17",
+  "tests": [
+    {
+      "test_name": "Semantic Equivalence Test",
+      "cases": [
+        {
+          "name": "State Modification",
+          "expected": "G:!email->status=invalid->login_count=0",
+          "languages": {
+            "python": "G:!email->status=invalid->login_count=0",
+            "rust": "G:!email->status=invalid->login_count=0",
+            "javascript": "G:!email->status=invalid->login_count=0"
+          },
+          "equivalent": true,
+          "notes": [
+            "\u2705 All languages produce equivalent HoloChain"
+          ]
+        },
+        {
+          "name": "Selection Pattern",
+          "expected": "S:x>5<=results::x*2",
+          "languages": {
+            "python": "S:x>5<=results::x*2",
+            "rust": "S:x>5<=results::x*2",
+            "javascript": "S:x>5<=results::x*2"
+          },
+          "equivalent": true,
+          "notes": [
+            "\u2705 All languages produce equivalent HoloChain"
+          ]
+        },
+        {
+          "name": "Error Handling",
+          "expected": "G:risky_operation()->result=success->R:result\nG:exception->R:None",
+          "languages": {
+            "python": "G:risky_operation()->result=success->R:result\nG:exception->R:None",
+            "rust": "G:risky_operation()->result=success->R:result\nG:exception->R:None",
+            "javascript": "G:risky_operation()->result=success->R:result\nG:exception->R:None"
+          },
+          "equivalent": true,
+          "notes": [
+            "\u2705 All languages produce equivalent HoloChain"
+          ]
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 0,
+        "total": 3
+      }
+    },
+    {
+      "test_name": "Reasoning Accuracy Test",
+      "cases": [
+        {
+          "name": "User Login Count Question",
+          "question": "Under what conditions will a user's login_count be set to 0?",
+          "correct_answer": "login_count is set to 0 when: (1) user has no email, OR (2) user status is 'trial' and days > 30",
+          "original_prompt": "Given this code:\n\ndef process_user(user):\n    if not user.email:\n        user.status = \"invalid\"\n        user.login_count = 0\n    elif user.status == \"trial\" and user.days > 30:\n        user.status = \"expired\"\n        user.login_count = 0\n    else:\n        user.login_count += 1\n    return user\n\n\nQuestion: Under what conditions will a user's login_count be set to 0?",
+          "holochain_prompt": "Given this HoloChain representation:\n\nF:process_user(user)->user\nG:!email->status=invalid->login_count=0\nG:status==trial&&days>30->status=expired->login_count=0\nG:else->login_count=login_count+1\n\n\nQuestion: Under what conditions will a user's login_count be set to 0?",
+          "token_comparison": {
+            "original_tokens": 72,
+            "holochain_tokens": 53,
+            "compression_ratio": 26.38888888888889
+          },
+          "notes": [
+            "Ready for AI testing - prompts generated"
+          ]
+        },
+        {
+          "name": "Discount Calculation",
+          "question": "What discount does a premium customer with 5 years get?",
+          "correct_answer": "0.20 (20% discount)",
+          "original_prompt": "Given this code:\n\ndef calculate_discount(customer):\n    if customer.type == \"premium\" and customer.years > 3:\n        return 0.20\n    elif customer.type == \"premium\":\n        return 0.15\n    elif customer.type == \"regular\" and customer.years > 2:\n        return 0.10\n    else:\n        return 0.05\n\n\nQuestion: What discount does a premium customer with 5 years get?",
+          "holochain_prompt": "Given this HoloChain representation:\n\nF:calculate_discount(customer)->discount\nG:type==premium&&years>3->R:0.20\nG:type==premium->R:0.15\nG:type==regular&&years>2->R:0.10\nG:else->R:0.05\n\n\nQuestion: What discount does a premium customer with 5 years get?",
+          "token_comparison": {
+            "original_tokens": 77,
+            "holochain_tokens": 60,
+            "compression_ratio": 22.07792207792208
+          },
+          "notes": [
+            "Ready for AI testing - prompts generated"
+          ]
+        },
+        {
+          "name": "Process Flow Tracing",
+          "question": "What happens if the patch validates and executes successfully, but tests fail?",
+          "correct_answer": "The patch is reversed and the function returns False",
+          "original_prompt": "Given this code:\n\ndef apply_patch(patch, repo, options):\n    if validate_patch(patch, repo):\n        if execute_patch(patch, repo):\n            run_formatter(repo)\n            if not options.skip_tests:\n                if not run_tests(repo):\n                    reverse_patch(patch, repo)\n                    return False\n            return True\n    return False\n\n\nQuestion: What happens if the patch validates and executes successfully, but tests fail?",
+          "holochain_prompt": "Given this HoloChain representation:\n\nF:apply_patch(patch,repo,options)->success\nG:!validate_patch()->R:False\nG:validate_patch()&&!execute_patch()->R:False\nG:validate_patch()&&execute_patch()->run_formatter()\nG:!skip_tests&&!run_tests()->reverse_patch()->R:False\nG:validate_patch()&&execute_patch()&&(skip_tests||run_tests())->R:True\n\n\nQuestion: What happens if the patch validates and executes successfully, but tests fail?",
+          "token_comparison": {
+            "original_tokens": 64,
+            "holochain_tokens": 81,
+            "compression_ratio": -26.5625
+          },
+          "notes": [
+            "Ready for AI testing - prompts generated"
+          ]
+        }
+      ],
+      "summary": {
+        "total": 3
+      }
+    },
+    {
+      "test_name": "Round Trip Test",
+      "cases": [
+        {
+          "name": "Simple Function",
+          "original_code": "def add_numbers(a, b):\n    result = a + b\n    return result",
+          "holochain": "F:add_numbers(a,b)->result\nR:a+b->result",
+          "reconstructed_code": "def add_numbers(a, b):\n    result = a + b\n    return result",
+          "semantic_equivalent": true,
+          "token_analysis": {
+            "original_tokens": 19,
+            "holochain_tokens": 13,
+            "reconstructed_tokens": 19
+          },
+          "notes": [
+            "Manual verification needed for semantic equivalence"
+          ]
+        },
+        {
+          "name": "Conditional Logic",
+          "original_code": "def check_access(user):\n    if user.active and user.verified:\n        return \"granted\"\n    else:\n        return \"denied\"",
+          "holochain": "F:check_access(user)->access\nG:active&&verified->R:granted\nG:else->R:denied",
+          "reconstructed_code": "def check_access(user):\n    if user.active and user.verified:\n        return \"granted\"\n    else:\n        return \"denied\"",
+          "semantic_equivalent": true,
+          "token_analysis": {
+            "original_tokens": 30,
+            "holochain_tokens": 29,
+            "reconstructed_tokens": 30
+          },
+          "notes": [
+            "Manual verification needed for semantic equivalence"
+          ]
+        }
+      ],
+      "summary": {
+        "total": 2
+      }
+    }
+  ]
+}

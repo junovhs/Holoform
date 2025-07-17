@@ -1,0 +1,47 @@
+{
+  "original_tokens": 105,
+  "compression_levels": [
+    {
+      "level": "Level 1: Baseline HoloChain",
+      "compressed_representation": "F:process_user_login(user)->result\nG:!email->status=invalid->login_count=0->R:email_required\nG:status==banned->login_count=0->R:account_banned\nG:failed_attempts>5->status=locked->login_count=0->R:account_locked\nG:else->login_count=login_count+1->R:login_successful",
+      "compressed_tokens": 82,
+      "compression_ratio": 21.904761904761905,
+      "tokens_saved": 23
+    },
+    {
+      "level": "Level 2: Aggressive Context",
+      "compressed_representation": "CTX:u=user,s=status,l=login_count,e=email,f=failed_attempts\nCTX:R1=email_required,R2=account_banned,R3=account_locked,R4=login_successful\nF:process_user_login(u)->result\nG:!e->s=invalid->l=0->R:R1\nG:s==banned->l=0->R:R2\nG:f>5->s=locked->l=0->R:R3\nG:else->l=l+1->R:R4",
+      "compressed_tokens": 112,
+      "compression_ratio": -6.666666666666667,
+      "tokens_saved": -7
+    },
+    {
+      "level": "Level 3: Numeric Encoding",
+      "compressed_representation": "CTX:u=user,s=status,l=login_count,e=email,f=failed_attempts\nCTX:1=email_required,2=account_banned,3=account_locked,4=login_successful,5=invalid,6=banned,7=locked\nF:process_user_login(u)->result\nG:!e->s=5->l=0->R:1\nG:s==6->l=0->R:2\nG:f>5->s=7->l=0->R:3\nG:else->l=l+1->R:4",
+      "compressed_tokens": 118,
+      "compression_ratio": -12.380952380952381,
+      "tokens_saved": -13
+    },
+    {
+      "level": "Level 4: Pattern Library",
+      "compressed_representation": "CTX:P1=validate_and_fail(condition,status_value,return_code)\nCTX:P2=increment_and_succeed(counter,return_code)\nF:process_user_login(u)->result\nP1(!e,5,1)\nP1(s==6,null,2)\nP1(f>5,7,3)\nP2(l,4)",
+      "compressed_tokens": 70,
+      "compression_ratio": 33.33333333333333,
+      "tokens_saved": 35
+    },
+    {
+      "level": "Level 5: Ultra Compressed",
+      "compressed_representation": "C:u,s,l,e,f,1,2,3,4,5,6,7\nF:process_user_login(u)\nG:!e\u2192s=5\u2192l=0\u2192R:1\nG:s=6\u2192l=0\u2192R:2\nG:f>5\u2192s=7\u2192l=0\u2192R:3\nG:*\u2192l++\u2192R:4",
+      "compressed_tokens": 84,
+      "compression_ratio": 20.0,
+      "tokens_saved": 21
+    },
+    {
+      "level": "Level 6: Tokenizer Optimized",
+      "compressed_representation": "C:u,s,l,e,f\n!e\u2192s=0\u2192l=0\u21921|s=1\u2192l=0\u21922|f>5\u2192s=2\u2192l=0\u21923|*\u2192l++\u21924",
+      "compressed_tokens": 51,
+      "compression_ratio": 51.42857142857142,
+      "tokens_saved": 54
+    }
+  ]
+}

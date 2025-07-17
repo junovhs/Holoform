@@ -1,0 +1,53 @@
+{
+  "state_modification": {
+    "1": {
+      "original_tokens": 21,
+      "compressed_tokens": 11,
+      "compression_ratio": 47.61904761904761
+    },
+    "10": {
+      "original_tokens": 151,
+      "compressed_tokens": 139,
+      "compression_ratio": 7.9470198675496695
+    },
+    "100": {
+      "original_tokens": 1501,
+      "compressed_tokens": 1399,
+      "compression_ratio": 6.795469686875416
+    }
+  },
+  "selection": {
+    "1": {
+      "original_tokens": 24,
+      "compressed_tokens": 12,
+      "compression_ratio": 50.0
+    },
+    "10": {
+      "original_tokens": 271,
+      "compressed_tokens": 139,
+      "compression_ratio": 48.708487084870846
+    },
+    "100": {
+      "original_tokens": 2701,
+      "compressed_tokens": 1399,
+      "compression_ratio": 48.20436875231396
+    }
+  },
+  "resource": {
+    "1": {
+      "original_tokens": 23,
+      "compressed_tokens": 19,
+      "compression_ratio": 17.391304347826086
+    },
+    "10": {
+      "original_tokens": 321,
+      "compressed_tokens": 270,
+      "compression_ratio": 15.887850467289718
+    },
+    "100": {
+      "original_tokens": 3201,
+      "compressed_tokens": 2700,
+      "compression_ratio": 15.651358950328023
+    }
+  }
+}

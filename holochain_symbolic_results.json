@@ -1,0 +1,37 @@
+{
+  "simple_function": {
+    "original_tokens": 13,
+    "compressed_tokens": 12,
+    "compression_ratio": 7.6923076923076925
+  },
+  "conditional_logic": {
+    "original_tokens": 38,
+    "compressed_tokens": 34,
+    "compression_ratio": 10.526315789473683
+  },
+  "state_modification": {
+    "original_tokens": 67,
+    "compressed_tokens": 45,
+    "compression_ratio": 32.83582089552239
+  },
+  "loop_with_condition": {
+    "original_tokens": 40,
+    "compressed_tokens": 22,
+    "compression_ratio": 45.0
+  },
+  "nested_conditions": {
+    "original_tokens": 118,
+    "compressed_tokens": 95,
+    "compression_ratio": 19.491525423728813
+  },
+  "resource_management": {
+    "original_tokens": 34,
+    "compressed_tokens": 30,
+    "compression_ratio": 11.76470588235294
+  },
+  "complex_function": {
+    "original_tokens": 138,
+    "compressed_tokens": 95,
+    "compression_ratio": 31.15942028985507
+  }
+}

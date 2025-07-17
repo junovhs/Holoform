@@ -1,0 +1,32 @@
+{
+  "10": {
+    "original_tokens": 897,
+    "compressed_tokens": 684,
+    "compression_ratio": 23.745819397993312,
+    "tokens_saved": 213
+  },
+  "50": {
+    "original_tokens": 4587,
+    "compressed_tokens": 3564,
+    "compression_ratio": 22.302158273381295,
+    "tokens_saved": 1023
+  },
+  "100": {
+    "original_tokens": 9234,
+    "compressed_tokens": 7206,
+    "compression_ratio": 21.962313190383366,
+    "tokens_saved": 2028
+  },
+  "500": {
+    "original_tokens": 46134,
+    "compressed_tokens": 36006,
+    "compression_ratio": 21.953439979191053,
+    "tokens_saved": 10128
+  },
+  "1000": {
+    "original_tokens": 92259,
+    "compressed_tokens": 72006,
+    "compression_ratio": 21.952329853997984,
+    "tokens_saved": 20253
+  }
+}
