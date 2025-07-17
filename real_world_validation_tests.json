@@ -1,0 +1,166 @@
+{
+  "explanation": "\n# Computational DNA: Codon System Explanation\n\n## Core Primitives (4 bases like DNA's ATGC):\n- `>` = Flow/Causality (\"then\", \"causes\", \"leads to\")\n- `=` = Assignment/Binding (\"becomes\", \"is set to\", \"equals\")\n- `?` = Condition/Guard (\"if\", \"when\", \"test\")\n- `@` = Context/Scope (\"in\", \"within\", \"scoped to\")\n\n## Key 3-Primitive Patterns (like DNA codons):\n- `?>=` = \"if condition, then flow to assignment\" (conditional set)\n- `@>=` = \"in context, flow to assignment\" (scoped set)\n- `>>=` = \"flow to assignment\" (pipeline result)\n- `??>` = \"if multiple conditions, then flow\" (multi-guard)\n- `@?>` = \"in context, if condition, then flow\" (scoped conditional)\n- `@@>` = \"in nested contexts, then flow\" (nested scope execution)\n\n## Reading Examples:\n- `@git>cmd=check>exec?success>=Ok` = \"In git context, flow to command equals check, flow to execute, if success then assign Ok\"\n- `?error>@rollback>=Err` = \"If error condition, flow to rollback context and assign Err\"\n- `@lock>status=active>save?persisted>=Ok` = \"In lock context, status becomes active, flow to save, if persisted then assign Ok\"\n\n## Context Rules:\n- `@context` enters a scope (like with_lock, with_db, in_transaction)\n- `>` shows causal flow between operations\n- `?condition` tests before proceeding\n- `=value` assigns or sets state\n",
+  "tests": [
+    {
+      "name": "Basic Git Operation Understanding",
+      "difficulty": "Basic",
+      "dimensions": [
+        "Comprehension",
+        "Error Handling",
+        "Conditional Logic"
+      ],
+      "prompt": "\n# Real World Validation Test: Basic Git Operation Understanding\n\n## Scenario\nUnderstanding a simple git command execution pattern\n\n## Original Rust Code (71 tokens)\n```rust\nlet mut command = Command::new(\"git\");\n                command.arg(\"apply\").arg(\"--check\");\n                let output = command.spawn()?.wait_with_output()?;\n                if output.status.success() {\n                    Ok(())\n                } else {\n                    Err(PatchError::Validation(String::from_utf8_lossy(&output.stderr).to_string()))\n                }\n```\n\n## Codon DNA Representation (16 tokens)\n```\n@git>cmd=check>exec?success>=Ok?!success>=Err\n```\n\n## Question\nWhat happens if the git command fails?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "If the git command fails (!success), then an Err is returned with validation error details",
+      "answer_criteria": [
+        "Must mention that failure leads to Err",
+        "Must understand the !success condition",
+        "Should recognize this is error handling"
+      ],
+      "metrics": {
+        "original_tokens": 71,
+        "codon_tokens": 16,
+        "compression_ratio": 77.46478873239437
+      }
+    },
+    {
+      "name": "Context Scoping Logic",
+      "difficulty": "Intermediate",
+      "dimensions": [
+        "Context Understanding",
+        "Sequential Logic",
+        "Nested Scopes",
+        "Conditional Branching"
+      ],
+      "prompt": "\n# Real World Validation Test: Context Scoping Logic\n\n## Scenario\nUnderstanding nested context operations\n\n## Original Rust Code (62 tokens)\n```rust\nwith_transaction(|| {\n                    with_lock(|| {\n                        user.status = Status::Active;\n                        user.save()?;\n                        if user.is_persisted() {\n                            notify_user(&user);\n                            Ok(user)\n                        } else {\n                            Err(PersistenceError::SaveFailed)\n                        }\n                    })\n                })\n```\n\n## Codon DNA Representation (22 tokens)\n```\n@transaction>@lock>status=active>save?persisted>notify>=Ok?!persisted>=Err\n```\n\n## Question\nIn what order do the operations execute, and what contexts are they in?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "1) Enter transaction context, 2) Enter lock context, 3) Set status to active, 4) Save user, 5) If persisted: notify user then return Ok, 6) If not persisted: return Err",
+      "answer_criteria": [
+        "Must identify the nested context order (transaction -> lock)",
+        "Must list operations in correct sequence",
+        "Must understand conditional branching at the end",
+        "Should recognize the scoped nature of operations"
+      ],
+      "metrics": {
+        "original_tokens": 62,
+        "codon_tokens": 22,
+        "compression_ratio": 64.51612903225806
+      }
+    },
+    {
+      "name": "Error Recovery Flow Tracing",
+      "difficulty": "Advanced",
+      "dimensions": [
+        "Error Recovery",
+        "Sequential Logic",
+        "Context Scoping",
+        "State Management"
+      ],
+      "prompt": "\n# Real World Validation Test: Error Recovery Flow Tracing\n\n## Scenario\nTracing complex error recovery with rollback\n\n## Original Rust Code (65 tokens)\n```rust\nmatch apply_patch(patch_content, repo_path) {\n                    Ok(success) => {\n                        run_tests(repo_path)?;\n                        Ok(success)\n                    },\n                    Err(patch_error) => {\n                        rollback_changes(repo_path)?;\n                        log_error(&patch_error);\n                        cleanup_temp_files()?;\n                        Err(patch_error)\n                    }\n                }\n```\n\n## Codon DNA Representation (19 tokens)\n```\n?patch_ok>run_tests>=Ok?patch_err>@rollback>log>cleanup>=Err\n```\n\n## Question\nIf patch application fails, what is the complete sequence of recovery operations?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "If patch fails: 1) Enter rollback context, 2) Log the error, 3) Cleanup temp files, 4) Return the original error",
+      "answer_criteria": [
+        "Must identify all 4 recovery steps in correct order",
+        "Must understand this only happens on patch failure",
+        "Should recognize the rollback context grouping",
+        "Must mention that original error is preserved and returned"
+      ],
+      "metrics": {
+        "original_tokens": 65,
+        "codon_tokens": 19,
+        "compression_ratio": 70.76923076923077
+      }
+    },
+    {
+      "name": "Multi-Condition Decision Tree",
+      "difficulty": "Advanced",
+      "dimensions": [
+        "Complex Conditionals",
+        "Logical Operators",
+        "Decision Trees",
+        "State Analysis"
+      ],
+      "prompt": "\n# Real World Validation Test: Multi-Condition Decision Tree\n\n## Scenario\nComplex conditional logic with multiple paths\n\n## Original Rust Code (94 tokens)\n```rust\nif user.is_authenticated() && user.has_permission(\"write\") && !repo.is_locked() {\n                    if backup_exists(&repo.path) {\n                        apply_changes(&repo, &changes)?;\n                        Ok(ChangeResult::Applied)\n                    } else {\n                        create_backup(&repo)?;\n                        apply_changes(&repo, &changes)?;\n                        Ok(ChangeResult::AppliedWithBackup)\n                    }\n                } else {\n                    Err(PermissionError::AccessDenied)\n                }\n```\n\n## Codon DNA Representation (33 tokens)\n```\n?auth&&write&&!locked>?backup>apply>=Applied?!backup>create_backup>apply>=AppliedWithBackup?!auth||!write||locked>=AccessDenied\n```\n\n## Question\nUnder what conditions will changes be applied WITH backup creation?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "Changes are applied WITH backup creation when: user is authenticated AND has write permission AND repo is not locked AND backup does NOT exist",
+      "answer_criteria": [
+        "Must identify all 4 required conditions (auth, write, !locked, !backup)",
+        "Must understand this is specifically for the backup creation path",
+        "Should recognize the logical AND relationship between conditions",
+        "Must distinguish from the regular apply path"
+      ],
+      "metrics": {
+        "original_tokens": 94,
+        "codon_tokens": 33,
+        "compression_ratio": 64.8936170212766
+      }
+    },
+    {
+      "name": "Resource Management Pattern",
+      "difficulty": "Intermediate",
+      "dimensions": [
+        "Resource Management",
+        "Error Propagation",
+        "Sequential Dependencies",
+        "Flow Control"
+      ],
+      "prompt": "\n# Real World Validation Test: Resource Management Pattern\n\n## Scenario\nUnderstanding resource acquisition and cleanup patterns\n\n## Original Rust Code (86 tokens)\n```rust\nlet file = File::open(&config_path)?;\n                let mut reader = BufReader::new(file);\n                let mut content = String::new();\n                reader.read_to_string(&mut content)?;\n                \n                let parsed_config = parse_config(&content)?;\n                validate_config(&parsed_config)?;\n                \n                if parsed_config.requires_backup {\n                    create_backup(&parsed_config.backup_path)?;\n                }\n                \n                apply_config(parsed_config)\n```\n\n## Codon DNA Representation (24 tokens)\n```\n@file>open>=reader>read>=content>parse>=config>validate?backup_required>create_backup>apply\n```\n\n## Question\nWhat happens if config validation fails?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "If config validation fails, the process stops at the validate step and returns an error - no backup is created and config is not applied",
+      "answer_criteria": [
+        "Must understand that validation failure stops the flow",
+        "Must recognize that subsequent steps (backup, apply) don't execute",
+        "Should understand the sequential dependency",
+        "Must mention error propagation"
+      ],
+      "metrics": {
+        "original_tokens": 86,
+        "codon_tokens": 24,
+        "compression_ratio": 72.09302325581395
+      }
+    },
+    {
+      "name": "Concurrent Context Handling",
+      "difficulty": "Advanced",
+      "dimensions": [
+        "Concurrency",
+        "Shared State",
+        "Thread Safety",
+        "Context Management"
+      ],
+      "prompt": "\n# Real World Validation Test: Concurrent Context Handling\n\n## Scenario\nUnderstanding concurrent operations with shared state\n\n## Original Rust Code (122 tokens)\n```rust\nlet results = Arc::new(Mutex::new(Vec::new()));\n                let handles: Vec<_> = tasks.into_iter().map(|task| {\n                    let results_clone = Arc::clone(&results);\n                    thread::spawn(move || {\n                        match process_task(task) {\n                            Ok(result) => {\n                                let mut results_guard = results_clone.lock().unwrap();\n                                results_guard.push(result);\n                            },\n                            Err(e) => {\n                                log_error(&e);\n                            }\n                        }\n                    })\n                }).collect();\n                \n                for handle in handles {\n                    handle.join().unwrap();\n                }\n```\n\n## Codon DNA Representation (22 tokens)\n```\n@concurrent>@tasks>process?success>@lock>results.push?error>log@join>wait\n```\n\n## Question\nHow is shared state (results) protected in this concurrent scenario?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "Shared state is protected by using a lock (@lock) - each thread must acquire the lock before pushing results, ensuring thread-safe access to the shared Vec",
+      "answer_criteria": [
+        "Must identify the lock mechanism for protection",
+        "Must understand this prevents race conditions",
+        "Should recognize the concurrent context",
+        "Must mention thread-safe access"
+      ],
+      "metrics": {
+        "original_tokens": 122,
+        "codon_tokens": 22,
+        "compression_ratio": 81.9672131147541
+      }
+    },
+    {
+      "name": "Full CLI Operation Simulation",
+      "difficulty": "Expert",
+      "dimensions": [
+        "Integration Flow",
+        "Error Recovery",
+        "State Management",
+        "Complex Conditionals",
+        "Resource Cleanup"
+      ],
+      "prompt": "\n# Real World Validation Test: Full CLI Operation Simulation\n\n## Scenario\nComplete CLI operation with validation, execution, and cleanup\n\n## Original Rust Code (184 tokens)\n```rust\n// Validate input\n                let patch = validate_patch_format(&input)?;\n                \n                // Check repository state\n                if !repo.is_clean() {\n                    return Err(RepoError::DirtyWorkingDirectory);\n                }\n                \n                // Create backup\n                let backup_path = create_backup(&repo)?;\n                \n                // Apply patch with rollback on failure\n                match apply_patch(&patch, &repo) {\n                    Ok(_) => {\n                        // Run tests\n                        match run_tests(&repo) {\n                            Ok(_) => {\n                                cleanup_backup(&backup_path)?;\n                                Ok(PatchResult::Success)\n                            },\n                            Err(test_error) => {\n                                rollback_from_backup(&backup_path, &repo)?;\n                                Err(PatchError::TestsFailed(test_error))\n                            }\n                        }\n                    },\n                    Err(patch_error) => {\n                        rollback_from_backup(&backup_path, &repo)?;\n                        Err(patch_error)\n                    }\n                }\n```\n\n## Codon DNA Representation (40 tokens)\n```\nvalidate>=patch?!clean>=DirtyRepo>create_backup>=backup_path?patch_ok>?tests_ok>cleanup>=Success?tests_fail>@rollback>=TestsFailed?patch_fail>@rollback>=PatchError\n```\n\n## Question\nIf patch application succeeds but tests fail, what is the complete recovery sequence?\n\n## Instructions\nPlease analyze the Codon DNA representation and provide a detailed answer. Focus on accuracy and completeness.\n",
+      "correct_answer": "If patch succeeds but tests fail: 1) Enter rollback context, 2) Restore from backup, 3) Return TestsFailed error with the test error details",
+      "answer_criteria": [
+        "Must identify that patch succeeded initially",
+        "Must recognize test failure triggers rollback",
+        "Must mention backup restoration",
+        "Must identify correct error type (TestsFailed)",
+        "Should understand the conditional flow"
+      ],
+      "metrics": {
+        "original_tokens": 184,
+        "codon_tokens": 40,
+        "compression_ratio": 78.26086956521739
+      }
+    }
+  ]
+}
