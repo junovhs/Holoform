@@ -1,0 +1,16 @@
+{
+  "test_id": "T5",
+  "date": "2024-01-17",
+  "pattern_sequence": "Resource Management (FAILED)",
+  "Su": 4,
+  "Sr": 1,
+  "Ep": 2,
+  "Er": 0,
+  "RTR": 25.0,
+  "ECS": 0.0,
+  "integrity_check": {
+    "Sr_le_Su": true,
+    "Er_le_Ep": true
+  },
+  "notes": "Processed via deterministic reconstruction simulation"
+}

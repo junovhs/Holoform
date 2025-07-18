@@ -1,0 +1,36 @@
+{
+  "test_id": "T4",
+  "pattern_sequence": "Multi-Condition Decision Tree",
+  "total_units": 4,
+  "error_paths": 0,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "condition",
+      "description": "Decision points in logic tree",
+      "pattern_context": "T4_decision_tree",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "condition",
+      "description": "Conditions determining each branch",
+      "pattern_context": "T4_decision_tree",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "description": "Possible outcomes or actions",
+      "pattern_context": "T4_decision_tree",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "condition",
+      "description": "Condition relationships and dependencies",
+      "pattern_context": "T4_decision_tree",
+      "is_error_related": false
+    }
+  ]
+}

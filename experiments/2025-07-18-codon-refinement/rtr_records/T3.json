@@ -1,0 +1,16 @@
+{
+  "test_id": "T3",
+  "date": "2024-01-17",
+  "pattern_sequence": "Expert CLI Operation",
+  "Su": 5,
+  "Sr": 4,
+  "Ep": 0,
+  "Er": 0,
+  "RTR": 80.0,
+  "ECS": null,
+  "integrity_check": {
+    "Sr_le_Su": true,
+    "Er_le_Ep": true
+  },
+  "notes": "Processed via deterministic reconstruction simulation"
+}

@@ -1,0 +1,46 @@
+{
+  "test_id": "T1",
+  "pattern_sequence": "Context Scoping Logic (Intermediate)",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "original_description": "Primary control flow structure execution",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Context scoping patterns well preserved in codon representation"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "condition",
+      "original_description": "Conditional branches evaluation",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Conditional logic clearly represented"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "original_description": "Variable modifications within scope",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Variable modifications captured in assignment patterns"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "context_scope",
+      "original_description": "Final output or return value determination",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Context boundaries preserved"
+    }
+  ],
+  "rtr_percentage": 100.0,
+  "ecs_percentage": 0.0,
+  "counts": {
+    "total_units": 4,
+    "recovered_units": 4,
+    "total_error_paths": 0,
+    "recovered_error_paths": 0
+  }
+}

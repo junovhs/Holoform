@@ -1,0 +1,15 @@
+{
+  "version": "v2.0-2025-07-18",
+  "tokenizer": "cl100k_base",
+  "minimal": {
+    "tokens": 107,
+    "content_length": 365,
+    "description": "Essential codon mappings only"
+  },
+  "full": {
+    "tokens": 436,
+    "content_length": 2088,
+    "description": "Complete definitions with error handling"
+  },
+  "overhead_ratio": 4.07
+}

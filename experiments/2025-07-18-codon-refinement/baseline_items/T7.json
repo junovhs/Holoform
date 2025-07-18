@@ -1,0 +1,25 @@
+{
+  "test_id": "T7",
+  "date": "2024-01-17",
+  "pattern_sequence": "Basic Git Operation",
+  "O": 71,
+  "C": 16,
+  "D": 107,
+  "dict_version": "v2.0-2025-07-18",
+  "dict_mode": "minimal",
+  "dictionary_hash": "8c1f63e2b61e3641eb150c383623cc32e824291c09ef54221fd71e7db43e5356",
+  "k_single": 1,
+  "k_batch": 7,
+  "baseline_questions": [
+    "What Git operation is being performed?",
+    "What are the input parameters or arguments?",
+    "What is the expected outcome or result?"
+  ],
+  "baseline_correct": null,
+  "compressed_correct": null,
+  "semantic_units_total": 3,
+  "semantic_units_recovered": null,
+  "error_paths_total": 0,
+  "error_paths_recovered": null,
+  "notes": "Original validation showed 3/3 criteria met perfectly, simple pattern fully recoverable"
+}

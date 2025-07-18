@@ -1,0 +1,43 @@
+{
+  "test_id": "T3",
+  "pattern_sequence": "Expert CLI Operation",
+  "total_units": 5,
+  "error_paths": 0,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "description": "Command-line operations execution",
+      "pattern_context": "T3_cli_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "assignment",
+      "description": "Input parameters and validation",
+      "pattern_context": "T3_cli_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "description": "Sequence of operations execution",
+      "pattern_context": "T3_cli_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "assignment",
+      "description": "Output or side effects production",
+      "pattern_context": "T3_cli_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_5",
+      "unit_type": "condition",
+      "description": "Different execution paths handling",
+      "pattern_context": "T3_cli_operation",
+      "is_error_related": false
+    }
+  ]
+}

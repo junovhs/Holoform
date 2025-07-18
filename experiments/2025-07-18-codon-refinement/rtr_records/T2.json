@@ -1,0 +1,16 @@
+{
+  "test_id": "T2",
+  "date": "2024-01-17",
+  "pattern_sequence": "Error Recovery Flow (Advanced)",
+  "Su": 4,
+  "Sr": 3,
+  "Ep": 2,
+  "Er": 2,
+  "RTR": 75.0,
+  "ECS": 100.0,
+  "integrity_check": {
+    "Sr_le_Su": true,
+    "Er_le_Ep": true
+  },
+  "notes": "Processed via deterministic reconstruction simulation"
+}

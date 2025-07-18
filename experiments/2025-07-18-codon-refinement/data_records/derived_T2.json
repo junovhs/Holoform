@@ -1,0 +1,15 @@
+{
+  "test_id": "T2",
+  "pattern_sequence": "Error Recovery Flow (Advanced)",
+  "O": 65,
+  "C": 19,
+  "D": 107,
+  "D_full": 436,
+  "GCR": 0.7076923076923076,
+  "NCR_k1": -0.9384615384615385,
+  "NCR_k7": 0.4725274725274725,
+  "NCR_full_k1": -6.0,
+  "NCR_full_k7": -0.2505494505494503,
+  "delta_NCR_k1": -1.646153846153846,
+  "delta_NCR_k7": -0.2351648351648351
+}

@@ -1,0 +1,15 @@
+>: Flow/Causality
+=: Assignment/Binding
+?: Condition/Guard
+@: Context/Scope
+!: Error/Exception
+~: Recovery/Fallback
+>>=: Pipeline-Assignment
+?>=: Conditional-Pipeline-Assignment
+@>=: Scoped-Pipeline-Assignment
+??>: Multi-Guard-Execution
+??=: Multi-Guard-Assignment
+@>@: Context-Transition
+>!~: Flow-Error-Recovery
+?!>: Error-Guard-Flow
+@=~: Resource-Acquire-Cleanup

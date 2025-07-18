@@ -1,0 +1,36 @@
+{
+  "test_id": "T2",
+  "pattern_sequence": "Error Recovery Flow (Advanced)",
+  "total_units": 4,
+  "error_paths": 2,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "error_path",
+      "description": "Error conditions detection and handling",
+      "pattern_context": "T2_error_recovery",
+      "is_error_related": true
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "error_path",
+      "description": "Recovery mechanism execution when errors occur",
+      "pattern_context": "T2_error_recovery",
+      "is_error_related": true
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "description": "Code flow changes during error states",
+      "pattern_context": "T2_error_recovery",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "flow_step",
+      "description": "Cleanup or rollback operations",
+      "pattern_context": "T2_error_recovery",
+      "is_error_related": false
+    }
+  ]
+}

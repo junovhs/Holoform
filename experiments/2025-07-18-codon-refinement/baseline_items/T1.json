@@ -1,0 +1,26 @@
+{
+  "test_id": "T1",
+  "date": "2024-01-17",
+  "pattern_sequence": "Context Scoping Logic (Intermediate)",
+  "O": 62,
+  "C": 22,
+  "D": 107,
+  "dict_version": "v2.0-2025-07-18",
+  "dict_mode": "minimal",
+  "dictionary_hash": "8c1f63e2b61e3641eb150c383623cc32e824291c09ef54221fd71e7db43e5356",
+  "k_single": 1,
+  "k_batch": 7,
+  "baseline_questions": [
+    "What is the primary control flow structure in this code?",
+    "How many conditional branches are present?",
+    "What variables are modified within the scope?",
+    "What is the final output or return value?"
+  ],
+  "baseline_correct": null,
+  "compressed_correct": null,
+  "semantic_units_total": 4,
+  "semantic_units_recovered": null,
+  "error_paths_total": 0,
+  "error_paths_recovered": null,
+  "notes": "Original validation showed 4/4 criteria met perfectly"
+}

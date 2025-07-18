@@ -1,0 +1,16 @@
+{
+  "test_id": "T1",
+  "date": "2024-01-17",
+  "pattern_sequence": "Context Scoping Logic (Intermediate)",
+  "Su": 4,
+  "Sr": 4,
+  "Ep": 0,
+  "Er": 0,
+  "RTR": 100.0,
+  "ECS": null,
+  "integrity_check": {
+    "Sr_le_Su": true,
+    "Er_le_Ep": true
+  },
+  "notes": "Processed via deterministic reconstruction simulation"
+}

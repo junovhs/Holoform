@@ -1,0 +1,36 @@
+{
+  "test_id": "T6",
+  "pattern_sequence": "Concurrent Context Handling",
+  "total_units": 4,
+  "error_paths": 1,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "description": "Concurrent operations coordination",
+      "pattern_context": "T6_concurrent_context",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "context_scope",
+      "description": "Context sharing between concurrent processes",
+      "pattern_context": "T6_concurrent_context",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "description": "Synchronization mechanisms usage",
+      "pattern_context": "T6_concurrent_context",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "error_path",
+      "description": "Race conditions or conflicts handling",
+      "pattern_context": "T6_concurrent_context",
+      "is_error_related": true
+    }
+  ]
+}

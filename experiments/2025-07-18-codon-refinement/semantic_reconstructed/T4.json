@@ -1,0 +1,46 @@
+{
+  "test_id": "T4",
+  "pattern_sequence": "Multi-Condition Decision Tree",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "condition",
+      "original_description": "Decision points in logic tree",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Decision tree conditions excellently preserved in ??> and ??= patterns"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "condition",
+      "original_description": "Conditions determining each branch",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Decision tree conditions excellently preserved in ??> and ??= patterns"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "original_description": "Possible outcomes or actions",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Outcome assignments clearly recoverable"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "condition",
+      "original_description": "Condition relationships and dependencies",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Decision tree conditions excellently preserved in ??> and ??= patterns"
+    }
+  ],
+  "rtr_percentage": 100.0,
+  "ecs_percentage": 0.0,
+  "counts": {
+    "total_units": 4,
+    "recovered_units": 4,
+    "total_error_paths": 0,
+    "recovered_error_paths": 0
+  }
+}

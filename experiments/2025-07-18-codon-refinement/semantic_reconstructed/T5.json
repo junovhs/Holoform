@@ -1,0 +1,46 @@
+{
+  "test_id": "T5",
+  "pattern_sequence": "Resource Management (FAILED)",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "assignment",
+      "original_description": "Resource management and tracking",
+      "is_recoverable": true,
+      "recovery_confidence": 0.7,
+      "recovery_notes": "Basic resource tracking partially recoverable"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "flow_step",
+      "original_description": "Resource acquisition and release",
+      "is_recoverable": false,
+      "recovery_confidence": 0.4,
+      "recovery_notes": "Resource acquisition/release details lost"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "error_path",
+      "original_description": "Error handling for resource failures",
+      "is_recoverable": false,
+      "recovery_confidence": 0.1,
+      "recovery_notes": "Error handling completely lost - critical failure"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "error_path",
+      "original_description": "Cleanup operations ensuring proper resource disposal",
+      "is_recoverable": false,
+      "recovery_confidence": 0.1,
+      "recovery_notes": "Error handling completely lost - critical failure"
+    }
+  ],
+  "rtr_percentage": 25.0,
+  "ecs_percentage": 0.0,
+  "counts": {
+    "total_units": 4,
+    "recovered_units": 1,
+    "total_error_paths": 2,
+    "recovered_error_paths": 0
+  }
+}

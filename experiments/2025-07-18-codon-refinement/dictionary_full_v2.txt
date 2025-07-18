@@ -1,0 +1,27 @@
+=== CORE PRIMITIVES ===
+>: Flow/Causality - Sequential execution, data flow, "then"
+=: Assignment/Binding - Value assignment, transformation, "becomes"
+?: Condition/Guard - Boolean test, conditional execution, "if"
+@: Context/Scope - Execution environment, resource scope, "within"
+=== ERROR PRIMITIVES ===
+!: Error/Exception - Error state, exception flow, "fails"
+~: Recovery/Fallback - Error recovery, default value, "or else"
+=== CODON LIBRARY ===
+>>=: Pipeline-Assignment - Execute sequential operations, assign final result to variable
+  Error: Propagates errors through pipeline - if any step fails, entire chain fails
+?>=: Conditional-Pipeline-Assignment - Test condition, if true execute pipeline and assign result
+  Error: Condition guards pipeline execution - false condition skips pipeline entirely
+@>=: Scoped-Pipeline-Assignment - Execute pipeline within specific context/scope, assign result
+  Error: Context ensures resource cleanup - errors trigger context cleanup before propagation
+??>: Multi-Guard-Execution - Test multiple conditions (AND logic), execute flow only if all true
+  Error: Short-circuit evaluation - first false condition stops evaluation and skips execution
+??=: Multi-Guard-Assignment - Test multiple conditions (AND logic), assign value only if all true
+  Error: Conditional assignment with explicit fallback - false conditions trigger else branch
+@>@: Context-Transition - Execute in first context, then transition to second context
+  Error: Nested context cleanup - inner context errors trigger cleanup of both contexts
+>!~: Flow-Error-Recovery - Execute flow, if error occurs, execute recovery action
+  Error: Explicit error recovery - errors are caught and handled with fallback action
+?!>: Error-Guard-Flow - Test for error condition, if error exists, execute error flow
+  Error: Explicit error detection and handling - tests for error state before proceeding
+@=~: Resource-Acquire-Cleanup - Acquire resource in context, assign to variable, ensure cleanup on exit
+  Error: Guaranteed resource cleanup - context ensures cleanup even if errors occur

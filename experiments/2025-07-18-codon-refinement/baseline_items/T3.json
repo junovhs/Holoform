@@ -1,0 +1,27 @@
+{
+  "test_id": "T3",
+  "date": "2024-01-17",
+  "pattern_sequence": "Expert CLI Operation",
+  "O": 184,
+  "C": 40,
+  "D": 107,
+  "dict_version": "v2.0-2025-07-18",
+  "dict_mode": "minimal",
+  "dictionary_hash": "8c1f63e2b61e3641eb150c383623cc32e824291c09ef54221fd71e7db43e5356",
+  "k_single": 1,
+  "k_batch": 7,
+  "baseline_questions": [
+    "What command-line operations are being performed?",
+    "What are the input parameters and their validation?",
+    "What is the sequence of operations executed?",
+    "What output or side effects are produced?",
+    "How are different execution paths handled?"
+  ],
+  "baseline_correct": null,
+  "compressed_correct": null,
+  "semantic_units_total": 5,
+  "semantic_units_recovered": null,
+  "error_paths_total": 1,
+  "error_paths_recovered": null,
+  "notes": "Original validation showed 4/5 criteria met, complex flow mostly recoverable"
+}

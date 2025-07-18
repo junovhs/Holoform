@@ -1,0 +1,36 @@
+{
+  "test_id": "T5",
+  "pattern_sequence": "Resource Management (FAILED)",
+  "total_units": 4,
+  "error_paths": 2,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "assignment",
+      "description": "Resource management and tracking",
+      "pattern_context": "T5_resource_management",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "flow_step",
+      "description": "Resource acquisition and release",
+      "pattern_context": "T5_resource_management",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "error_path",
+      "description": "Error handling for resource failures",
+      "pattern_context": "T5_resource_management",
+      "is_error_related": true
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "error_path",
+      "description": "Cleanup operations ensuring proper resource disposal",
+      "pattern_context": "T5_resource_management",
+      "is_error_related": true
+    }
+  ]
+}

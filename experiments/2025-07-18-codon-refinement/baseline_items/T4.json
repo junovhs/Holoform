@@ -1,0 +1,26 @@
+{
+  "test_id": "T4",
+  "date": "2024-01-17",
+  "pattern_sequence": "Multi-Condition Decision Tree",
+  "O": 94,
+  "C": 33,
+  "D": 107,
+  "dict_version": "v2.0-2025-07-18",
+  "dict_mode": "minimal",
+  "dictionary_hash": "8c1f63e2b61e3641eb150c383623cc32e824291c09ef54221fd71e7db43e5356",
+  "k_single": 1,
+  "k_batch": 7,
+  "baseline_questions": [
+    "How many decision points are in the logic tree?",
+    "What conditions determine each branch?",
+    "What are the possible outcomes or actions?",
+    "How do the conditions relate to each other?"
+  ],
+  "baseline_correct": null,
+  "compressed_correct": null,
+  "semantic_units_total": 4,
+  "semantic_units_recovered": null,
+  "error_paths_total": 0,
+  "error_paths_recovered": null,
+  "notes": "Original validation showed 4/4 criteria met perfectly, logical conditions fully recoverable"
+}

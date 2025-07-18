@@ -1,0 +1,12 @@
+{
+  "minimal_dictionary": {
+    "file": "dictionary_minimal_v2.txt",
+    "sha256": "8c1f63e2b61e3641eb150c383623cc32e824291c09ef54221fd71e7db43e5356",
+    "tokens": 107
+  },
+  "full_dictionary": {
+    "file": "dictionary_full_v2.txt",
+    "sha256": "6e8f16c77ee14978982c0379df773e74e421313f1e9f757c3916be49eba177d3",
+    "tokens": 436
+  }
+}

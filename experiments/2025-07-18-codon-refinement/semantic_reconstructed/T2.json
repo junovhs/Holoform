@@ -1,0 +1,46 @@
+{
+  "test_id": "T2",
+  "pattern_sequence": "Error Recovery Flow (Advanced)",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "error_path",
+      "original_description": "Error conditions detection and handling",
+      "is_recoverable": true,
+      "recovery_confidence": 0.85,
+      "recovery_notes": "Error detection patterns recoverable from >!~ and ?!> codons"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "error_path",
+      "original_description": "Recovery mechanism execution when errors occur",
+      "is_recoverable": true,
+      "recovery_confidence": 0.8,
+      "recovery_notes": "Recovery mechanisms partially recoverable"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "original_description": "Code flow changes during error states",
+      "is_recoverable": true,
+      "recovery_confidence": 0.85,
+      "recovery_notes": "Error flow changes recoverable"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "flow_step",
+      "original_description": "Cleanup or rollback operations",
+      "is_recoverable": false,
+      "recovery_confidence": 0.3,
+      "recovery_notes": "Cleanup details lost in compression - known limitation"
+    }
+  ],
+  "rtr_percentage": 75.0,
+  "ecs_percentage": 100.0,
+  "counts": {
+    "total_units": 4,
+    "recovered_units": 3,
+    "total_error_paths": 2,
+    "recovered_error_paths": 2
+  }
+}

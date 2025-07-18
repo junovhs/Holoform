@@ -1,0 +1,38 @@
+{
+  "test_id": "T7",
+  "pattern_sequence": "Basic Git Operation",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "original_description": "Git operation execution",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Simple Git operation fully recoverable"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "assignment",
+      "original_description": "Input parameters or arguments processing",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Parameter and result assignments clearly recoverable"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "original_description": "Expected outcome or result generation",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Parameter and result assignments clearly recoverable"
+    }
+  ],
+  "rtr_percentage": 100.0,
+  "ecs_percentage": 0.0,
+  "counts": {
+    "total_units": 3,
+    "recovered_units": 3,
+    "total_error_paths": 0,
+    "recovered_error_paths": 0
+  }
+}

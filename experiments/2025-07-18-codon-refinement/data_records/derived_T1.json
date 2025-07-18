@@ -1,0 +1,15 @@
+{
+  "test_id": "T1",
+  "pattern_sequence": "Context Scoping Logic (Intermediate)",
+  "O": 62,
+  "C": 22,
+  "D": 107,
+  "D_full": 436,
+  "GCR": 0.6451612903225806,
+  "NCR_k1": -1.0806451612903225,
+  "NCR_k7": 0.3986175115207373,
+  "NCR_full_k1": -6.387096774193548,
+  "NCR_full_k7": -0.3594470046082947,
+  "delta_NCR_k1": -1.725806451612903,
+  "delta_NCR_k7": -0.2465437788018433
+}

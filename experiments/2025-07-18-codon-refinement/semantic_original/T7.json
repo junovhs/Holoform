@@ -1,0 +1,29 @@
+{
+  "test_id": "T7",
+  "pattern_sequence": "Basic Git Operation",
+  "total_units": 3,
+  "error_paths": 0,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "description": "Git operation execution",
+      "pattern_context": "T7_git_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "assignment",
+      "description": "Input parameters or arguments processing",
+      "pattern_context": "T7_git_operation",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "description": "Expected outcome or result generation",
+      "pattern_context": "T7_git_operation",
+      "is_error_related": false
+    }
+  ]
+}

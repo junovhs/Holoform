@@ -1,0 +1,54 @@
+{
+  "test_id": "T3",
+  "pattern_sequence": "Expert CLI Operation",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "original_description": "Command-line operations execution",
+      "is_recoverable": true,
+      "recovery_confidence": 0.85,
+      "recovery_notes": "CLI operation flows well represented in pipeline patterns"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "assignment",
+      "original_description": "Input parameters and validation",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Parameter and output assignments clearly recoverable"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "original_description": "Sequence of operations execution",
+      "is_recoverable": true,
+      "recovery_confidence": 0.85,
+      "recovery_notes": "CLI operation flows well represented in pipeline patterns"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "assignment",
+      "original_description": "Output or side effects production",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Parameter and output assignments clearly recoverable"
+    },
+    {
+      "unit_id": "unit_5",
+      "unit_type": "condition",
+      "original_description": "Different execution paths handling",
+      "is_recoverable": false,
+      "recovery_confidence": 0.6,
+      "recovery_notes": "Complex execution paths partially lost in compression"
+    }
+  ],
+  "rtr_percentage": 80.0,
+  "ecs_percentage": 0.0,
+  "counts": {
+    "total_units": 5,
+    "recovered_units": 4,
+    "total_error_paths": 0,
+    "recovered_error_paths": 0
+  }
+}

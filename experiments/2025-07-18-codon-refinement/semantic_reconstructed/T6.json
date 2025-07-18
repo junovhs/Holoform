@@ -1,0 +1,46 @@
+{
+  "test_id": "T6",
+  "pattern_sequence": "Concurrent Context Handling",
+  "reconstruction_results": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "original_description": "Concurrent operations coordination",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Concurrent operations well represented in @>@ context transitions"
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "context_scope",
+      "original_description": "Context sharing between concurrent processes",
+      "is_recoverable": true,
+      "recovery_confidence": 0.95,
+      "recovery_notes": "Context sharing excellently preserved"
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "flow_step",
+      "original_description": "Synchronization mechanisms usage",
+      "is_recoverable": true,
+      "recovery_confidence": 0.9,
+      "recovery_notes": "Concurrent operations well represented in @>@ context transitions"
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "error_path",
+      "original_description": "Race conditions or conflicts handling",
+      "is_recoverable": true,
+      "recovery_confidence": 0.85,
+      "recovery_notes": "Race condition handling recoverable from error patterns"
+    }
+  ],
+  "rtr_percentage": 100.0,
+  "ecs_percentage": 100.0,
+  "counts": {
+    "total_units": 4,
+    "recovered_units": 4,
+    "total_error_paths": 1,
+    "recovered_error_paths": 1
+  }
+}

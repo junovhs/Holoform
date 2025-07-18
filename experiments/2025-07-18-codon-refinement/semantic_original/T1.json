@@ -1,0 +1,36 @@
+{
+  "test_id": "T1",
+  "pattern_sequence": "Context Scoping Logic (Intermediate)",
+  "total_units": 4,
+  "error_paths": 0,
+  "semantic_units": [
+    {
+      "unit_id": "unit_1",
+      "unit_type": "flow_step",
+      "description": "Primary control flow structure execution",
+      "pattern_context": "T1_context_scoping",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_2",
+      "unit_type": "condition",
+      "description": "Conditional branches evaluation",
+      "pattern_context": "T1_context_scoping",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_3",
+      "unit_type": "assignment",
+      "description": "Variable modifications within scope",
+      "pattern_context": "T1_context_scoping",
+      "is_error_related": false
+    },
+    {
+      "unit_id": "unit_4",
+      "unit_type": "context_scope",
+      "description": "Final output or return value determination",
+      "pattern_context": "T1_context_scoping",
+      "is_error_related": false
+    }
+  ]
+}
