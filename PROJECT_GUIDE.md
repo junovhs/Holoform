@@ -68,10 +68,12 @@ This guide helps AI assistants understand the Holoform project structure and con
 
 **Primary Goal**: Does Holoform make LLM pick the right answer more often on 5 toy tasks?
 
-Current results show:
-- **22.22% accuracy improvement** (33.33% vs 11.11%)
-- Token reduction varies by content size
-- Overall efficiency depends on both factors
+**IMPORTANT**: Current MockLLM results are **FAKE** and meaningless. See `NEVER_SIMULATE_AI.md`.
+
+Real testing requires:
+- Actual LLM API calls (OpenAI, Anthropic, etc.)
+- Local model testing (Ollama, etc.)  
+- Manual evaluation with real AI assistants
 
 ## Development Guidelines
 

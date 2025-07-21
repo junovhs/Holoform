@@ -9,9 +9,10 @@ import sys
 import time
 from typing import Dict, List, Any
 
-# Mock LLM interface - replace with actual LLM calls
+# FAKE LLM - PRODUCES MEANINGLESS RESULTS
+# See NEVER_SIMULATE_AI.md - This must be replaced with real LLM
 class MockLLM:
-    """Mock LLM for demonstration - replace with OpenAI/local model"""
+    """FAKE LLM - Replace with OpenAI/local model for real testing"""
     
     def query(self, prompt: str) -> str:
         """Mock LLM response - in real version, call actual LLM"""

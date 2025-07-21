@@ -4,7 +4,9 @@
 
 ## What This Is
 
-A minimal demo showing that "Holoforms" (structured AST representations) can make LLMs understand code better while using fewer tokens.
+A minimal demo framework for testing whether "Holoforms" (structured AST representations) can make LLMs understand code better while using fewer tokens.
+
+**⚠️ IMPORTANT**: Current evaluation uses fake MockLLM. See `NEVER_SIMULATE_AI.md` for real testing requirements.
 
 ## Quick Start
 
