@@ -1,0 +1,241 @@
+[
+  {
+    "type": "function",
+    "name": "fibonacci",
+    "scope": "",
+    "signature": {
+      "args": [
+        "n"
+      ],
+      "defaults": 0,
+      "returns": null
+    },
+    "body_structure": {
+      "statements": 3,
+      "control_flow": [
+        "if"
+      ],
+      "operations": [
+        "return"
+      ],
+      "calls": []
+    },
+    "complexity": 2,
+    "dependencies": [
+      "fibonacci",
+      "n"
+    ],
+    "docstring": "Calculate the nth Fibonacci number."
+  },
+  {
+    "type": "function",
+    "name": "__init__",
+    "scope": "Calculator",
+    "signature": {
+      "args": [
+        "self"
+      ],
+      "defaults": 0,
+      "returns": null
+    },
+    "body_structure": {
+      "statements": 1,
+      "control_flow": [],
+      "operations": [
+        "assign"
+      ],
+      "calls": []
+    },
+    "complexity": 1,
+    "dependencies": [
+      "self"
+    ],
+    "method_type": "constructor"
+  },
+  {
+    "type": "function",
+    "name": "add",
+    "scope": "Calculator",
+    "signature": {
+      "args": [
+        "self",
+        "a",
+        "b"
+      ],
+      "defaults": 0,
+      "returns": null
+    },
+    "body_structure": {
+      "statements": 3,
+      "control_flow": [],
+      "operations": [
+        "assign",
+        "return"
+      ],
+      "calls": [
+        "self.history.append"
+      ]
+    },
+    "complexity": 1,
+    "dependencies": [
+      "a",
+      "b",
+      "result",
+      "self",
+      "self.history.append"
+    ],
+    "method_type": "public"
+  },
+  {
+    "type": "function",
+    "name": "get_last_operation",
+    "scope": "Calculator",
+    "signature": {
+      "args": [
+        "self"
+      ],
+      "defaults": 0,
+      "returns": null
+    },
+    "body_structure": {
+      "statements": 1,
+      "control_flow": [],
+      "operations": [
+        "return"
+      ],
+      "calls": []
+    },
+    "complexity": 1,
+    "dependencies": [
+      "self"
+    ],
+    "method_type": "public"
+  },
+  {
+    "type": "class",
+    "name": "Calculator",
+    "scope": "",
+    "bases": [],
+    "methods": [
+      {
+        "type": "function",
+        "name": "__init__",
+        "scope": "Calculator",
+        "signature": {
+          "args": [
+            "self"
+          ],
+          "defaults": 0,
+          "returns": null
+        },
+        "body_structure": {
+          "statements": 1,
+          "control_flow": [],
+          "operations": [
+            "assign"
+          ],
+          "calls": []
+        },
+        "complexity": 1,
+        "dependencies": [
+          "self"
+        ],
+        "method_type": "constructor"
+      },
+      {
+        "type": "function",
+        "name": "add",
+        "scope": "Calculator",
+        "signature": {
+          "args": [
+            "self",
+            "a",
+            "b"
+          ],
+          "defaults": 0,
+          "returns": null
+        },
+        "body_structure": {
+          "statements": 3,
+          "control_flow": [],
+          "operations": [
+            "assign",
+            "return"
+          ],
+          "calls": [
+            "self.history.append"
+          ]
+        },
+        "complexity": 1,
+        "dependencies": [
+          "a",
+          "b",
+          "result",
+          "self",
+          "self.history.append"
+        ],
+        "method_type": "public"
+      },
+      {
+        "type": "function",
+        "name": "get_last_operation",
+        "scope": "Calculator",
+        "signature": {
+          "args": [
+            "self"
+          ],
+          "defaults": 0,
+          "returns": null
+        },
+        "body_structure": {
+          "statements": 1,
+          "control_flow": [],
+          "operations": [
+            "return"
+          ],
+          "calls": []
+        },
+        "complexity": 1,
+        "dependencies": [
+          "self"
+        ],
+        "method_type": "public"
+      }
+    ],
+    "attributes": [
+      "history"
+    ],
+    "complexity": 1
+  },
+  {
+    "type": "function",
+    "name": "process_numbers",
+    "scope": "",
+    "signature": {
+      "args": [
+        "numbers"
+      ],
+      "defaults": 0,
+      "returns": null
+    },
+    "body_structure": {
+      "statements": 4,
+      "control_flow": [
+        "if"
+      ],
+      "operations": [
+        "assign",
+        "return"
+      ],
+      "calls": []
+    },
+    "complexity": 2,
+    "dependencies": [
+      "len",
+      "numbers",
+      "sum",
+      "total"
+    ],
+    "docstring": "Process a list of numbers and return statistics."
+  }
+]

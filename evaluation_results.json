@@ -1,0 +1,71 @@
+{
+  "raw_results": {
+    "method": "raw_code",
+    "token_count": 84,
+    "test_results": [
+      {
+        "test": "fibonacci_purpose",
+        "response": "Calculates Fibonacci sequence",
+        "expected": "nth Fibonacci number",
+        "accuracy": 0.3333333333333333,
+        "response_time": 0.0
+      },
+      {
+        "test": "calculator_purpose",
+        "response": "Calculates Fibonacci sequence",
+        "expected": "calculator with history tracking",
+        "accuracy": 0.0,
+        "response_time": 0.0
+      },
+      {
+        "test": "process_numbers_output",
+        "response": "Calculates Fibonacci sequence",
+        "expected": "statistics dictionary with count, sum, average",
+        "accuracy": 0.0,
+        "response_time": 0.0
+      }
+    ]
+  },
+  "holoform_results": {
+    "method": "holoforms",
+    "token_count": 379,
+    "test_results": [
+      {
+        "test": "fibonacci_purpose",
+        "response": "Returns the nth Fibonacci number using recursion",
+        "expected": "nth Fibonacci number",
+        "accuracy": 1.0,
+        "response_time": 0.0
+      },
+      {
+        "test": "calculator_purpose",
+        "response": "Returns the nth Fibonacci number using recursion",
+        "expected": "calculator with history tracking",
+        "accuracy": 0.0,
+        "response_time": 0.0
+      },
+      {
+        "test": "process_numbers_output",
+        "response": "Returns the nth Fibonacci number using recursion",
+        "expected": "statistics dictionary with count, sum, average",
+        "accuracy": 0.0,
+        "response_time": 0.0
+      }
+    ]
+  },
+  "comparison": {
+    "raw_code": {
+      "avg_accuracy": 0.1111111111111111,
+      "token_count": 84
+    },
+    "holoforms": {
+      "avg_accuracy": 0.3333333333333333,
+      "token_count": 379
+    },
+    "improvements": {
+      "accuracy_gain": 0.2222222222222222,
+      "token_reduction": -3.511904761904762,
+      "efficiency_score": -3.2896825396825395
+    }
+  }
+}
